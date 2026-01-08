@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import SplashScreen from './components/SplashScreen';
+import SplashScreen from "./components/SplashScreen.tsx";
 import IdentitySetup from './components/IdentitySetup';
 import Equalizer from './components/Equalizer';
 import DiagnosisRadar from './components/DiagnosisRadar';
