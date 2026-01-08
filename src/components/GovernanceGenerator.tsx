@@ -8,6 +8,7 @@ interface GovernanceGeneratorProps {
     onRestart: () => void;
     corpName: string;
     leadEmail?: string;
+    labels: any;
 }
 
 const CLAUSES_MAP: Record<string, string> = {
@@ -17,7 +18,7 @@ const CLAUSES_MAP: Record<string, string> = {
     ip: "Clause 9.0 (Background vs Foreground IP): Background IP remains with the Startup. Only new IP specifically created for this integration (Foreground) shall be joint property.",
 };
 
-const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName }) => {
+const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels }) => {
     const [email, setEmail] = useState('');
     const [lgpdConsent, setLgpdConsent] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
@@ -94,28 +95,30 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
         setShowEmailModal(false);
     };
 
+    const translatedRiskLevel = labels[riskLevel.toLowerCase()] || riskLevel;
+
     return (
         <div className="w-full max-w-5xl mx-auto pb-24">
             {/* Header Result */}
             <div className="glass-panel p-8 rounded-2xl mb-8 flex flex-col md:flex-row items-center justify-between gap-8 border-t-4 border-t-white/10 print:border-none print:shadow-none">
                 <div className="flex-1">
-                    <h2 className="text-gray-400 text-sm tracking-widest mb-2">SYNERGY DIAGNOSIS</h2>
+                    <h2 className="text-gray-400 text-sm tracking-widest mb-2">{labels.stepTitle}</h2>
                     <div className="text-5xl md:text-7xl font-black text-white mb-2">
                         {score}<span className="text-2xl text-gray-600">/100</span>
                     </div>
                     <div className={`text-xl tracking-widest font-bold ${riskColor}`}>
-                        LEVEL: {riskLevel}
+                        {labels.levelLabel}: {translatedRiskLevel}
                     </div>
                 </div>
 
                 <div className="flex gap-4 no-print">
-                    <button onClick={handleShare} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors tooltip" title="Share">
+                    <button onClick={handleShare} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors tooltip" title={labels.share}>
                         <Share2 className="w-6 h-6 text-white" />
                     </button>
-                    <button onClick={handlePrint} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title="Print PDF">
+                    <button onClick={handlePrint} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.print}>
                         <Printer className="w-6 h-6 text-white" />
                     </button>
-                    <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title="Export CSV">
+                    <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.exportCsv}>
                         <Download className="w-6 h-6 text-white" />
                     </button>
                 </div>
@@ -129,7 +132,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                             <AlertTriangle className="w-24 h-24 text-red-500" />
                         </div>
                         <h4 className="text-red-400 font-bold mb-1 flex items-center gap-2">
-                            <Lock className="w-4 h-4" /> FRICTION: {dim.label.toUpperCase()}
+                            <Lock className="w-4 h-4" /> {labels.frictionDetected}: {dim.label.toUpperCase()}
                         </h4>
                         <p className="text-gray-400 text-sm mb-4">
                             Gap detected: {dim.delta} points.
@@ -145,7 +148,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                 {analysis.filter((dim: any) => dim.status === 'optimal').length > 0 && (
                     <div className="glass-panel p-6 rounded-xl border border-green-500/20 relative">
                         <h4 className="text-green-400 font-bold mb-4 flex items-center gap-2">
-                            <CheckCircle className="w-4 h-4" /> OPTIMAL ZONES
+                            <CheckCircle className="w-4 h-4" /> {labels.optimalZone}
                         </h4>
                         <ul className="space-y-2">
                             {analysis.filter((dim: any) => dim.status === 'optimal').map((dim: any) => (
@@ -171,7 +174,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                 </a>
                 <div className="mt-8">
                     <button onClick={onRestart} className="text-gray-600 hover:text-white text-sm underline">
-                        Start New Calibration
+                        {labels.restart}
                     </button>
                 </div>
             </div>

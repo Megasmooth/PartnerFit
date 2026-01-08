@@ -1,14 +1,16 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ActorProfile, DIMENSIONS, DimensionConfig } from '../types';
+import { ActorProfile, DIMENSIONS, DimensionConfig, EcosystemValues } from '../types';
 import { Info } from 'lucide-react';
 
 interface EqualizerProps {
     corp: ActorProfile;
     startup: ActorProfile;
-    setCorpValue: (dimId: string, val: number) => void;
-    setStartupValue: (dimId: string, val: number) => void;
+    setCorpValue: (dimId: keyof EcosystemValues, val: number) => void;
+    setStartupValue: (dimId: keyof EcosystemValues, val: number) => void;
     onNext: () => void;
+    labels: any;
 }
 
 const SliderTrack: React.FC<{
@@ -53,10 +55,10 @@ const SliderTrack: React.FC<{
 
                 {/* Tension Line (Connecting the two points) */}
                 <motion.div
-                    className={`absolute h-1 rounded-full z-10 transition-colors duration-300 ${isCritical ? 'bg-vault-gap' : 'bg-white/20'}`}
+                    className={`absolute h - 1 rounded - full z - 10 transition - colors duration - 300 ${isCritical ? 'bg-vault-gap' : 'bg-white/20'} `}
                     style={{
-                        left: `calc(${Math.min(corpPct, startPct)}%)`,
-                        width: `calc(${Math.abs(corpPct - startPct)}%)`
+                        left: `calc(${Math.min(corpPct, startPct)} %)`,
+                        width: `calc(${Math.abs(corpPct - startPct)} %)`
                     }}
                     animate={isCritical ? {
                         y: [0, -2, 2, -1, 1, 0],
@@ -74,7 +76,7 @@ const SliderTrack: React.FC<{
                 {/* Corp Handle (Blue) */}
                 <div
                     className="absolute w-8 h-8 -ml-4 bg-vault-corp rounded-full shadow-[0_0_15px_#00FFFF] cursor-grab active:cursor-grabbing flex items-center justify-center text-black font-bold text-xs hover:scale-110 transition-transform z-20"
-                    style={{ left: `calc(${corpPct}% + 1.5rem)` }} // +1.5rem to offset padding
+                    style={{ left: `calc(${corpPct} % + 1.5rem)` }} // +1.5rem to offset padding
                     onMouseDown={(e) => {
                         const track = e.currentTarget.parentElement!;
                         const handleMouseMove = (ev: MouseEvent) => {
@@ -99,7 +101,7 @@ const SliderTrack: React.FC<{
                 {/* Startup Handle (Green) */}
                 <div
                     className="absolute top-1/2 mt-4 w-8 h-8 -ml-4 bg-vault-startup rounded-full shadow-[0_0_15px_#22c55e] cursor-grab active:cursor-grabbing flex items-center justify-center text-black font-bold text-xs hover:scale-110 transition-transform z-30"
-                    style={{ left: `calc(${startPct}% + 1.5rem)` }}
+                    style={{ left: `calc(${startPct} % + 1.5rem)` }}
                     onMouseDown={(e) => {
                         const track = e.currentTarget.parentElement!;
                         const handleMouseMove = (ev: MouseEvent) => {
@@ -131,7 +133,7 @@ const SliderTrack: React.FC<{
     );
 };
 
-const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setStartupValue, onNext }) => {
+const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setStartupValue, onNext, labels }) => {
     return (
         <div className="w-full max-w-4xl mx-auto p-4 pb-24">
             <div className="mb-8 text-center">
@@ -155,15 +157,17 @@ const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setS
             <motion.div
                 className="fixed bottom-12 left-0 right-0 flex justify-center z-50"
             >
-                <button
-                    onClick={onNext}
-                    className="px-12 py-4 rounded-full font-bold tracking-widest text-lg bg-white text-black hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all"
-                >
-                    GENERATE_DIAGNOSIS
-                </button>
-            </motion.div>
+                <div className="text-center">
+                    <button
+                        onClick={onNext}
+                        className="px-12 py-4 rounded-full bg-white text-black font-black tracking-widest text-sm hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300"
+                    >
+                        {labels.nextBtn}
+                    </button>
+                </div>      </motion.div>
         </div>
     );
 };
 
 export default Equalizer;
+
