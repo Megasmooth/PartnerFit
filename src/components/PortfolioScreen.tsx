@@ -11,13 +11,46 @@ interface PortfolioScreenProps {
 }
 
 const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onView, onBack }) => {
+    const avgScore = analyses.length > 0
+        ? Math.round(analyses.reduce((acc, curr) => acc + curr.score, 0) / analyses.length)
+        : 0;
+
     return (
-        <div className="w-full max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-500">
-            <div className="flex items-center gap-4 mb-8">
+        <div className="w-full max-w-5xl animate-in fade-in slide-in-from-bottom-8 duration-500 pb-20">
+            <div className="flex items-center gap-4 mb-2">
                 <button onClick={onBack} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white">
                     <ArrowLeft className="w-6 h-6" />
                 </button>
-                <h2 className="text-3xl font-black text-white tracking-widest">{lang.portfolio.title}</h2>
+                <h2 className="text-body-highlight text-emerald-400">{lang.portfolio.title}</h2>
+            </div>
+
+            <h3 className="text-3xl md:text-5xl font-black text-white mb-10 tracking-tighter uppercase">Vault</h3>
+
+            {/* Aggregate Insights Header */}
+            {analyses.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div className="glass-panel p-6 rounded-2xl border-l-4 border-l-emerald-500 shadow-xl">
+                        <div className="text-[10px] font-black text-emerald-500 tracking-[0.2em] uppercase mb-1">{lang.portfolio.avgScore}</div>
+                        <div className="text-4xl font-black text-white">{avgScore}<span className="text-sm text-gray-600">/100</span></div>
+                    </div>
+                    <div className="glass-panel p-6 rounded-2xl border-l-4 border-l-cyan-500 shadow-xl">
+                        <div className="text-[10px] font-black text-cyan-500 tracking-[0.2em] uppercase mb-1">{lang.portfolio.totalAnalyses}</div>
+                        <div className="text-4xl font-black text-white">{analyses.length}</div>
+                    </div>
+                    <div className="glass-panel p-6 rounded-2xl border-l-4 border-l-purple-500 shadow-xl flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-full bg-purple-500/10 flex items-center justify-center">
+                            <TrendingUp className="w-6 h-6 text-purple-400" />
+                        </div>
+                        <div>
+                            <div className="text-[10px] font-black text-purple-500 tracking-[0.2em] uppercase mb-1">{lang.portfolio.status}</div>
+                            <div className="text-lg font-bold text-white tracking-tight">PORTFOLIO ACTIVE</div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            <div className="mb-6 flex justify-between items-end border-b border-white/5 pb-4">
+                <h4 className="text-[10px] font-black text-gray-500 tracking-[0.3em] uppercase">Individual Projects</h4>
             </div>
 
             {analyses.length === 0 ? (

@@ -9,8 +9,26 @@ import { ActorProfile } from './types';
 import { useSynergyScore } from './utils/logic';
 import { TRANSLATIONS, Language } from './utils/i18n';
 import { storage, SavedAnalysis } from './utils/storage';
-import { Zap, Home, BookOpen, Globe, HelpCircle } from 'lucide-react';
+import { Zap, Home, BookOpen, Globe, HelpCircle, ArrowUp } from 'lucide-react';
 import KnowledgeHub from './components/KnowledgeHub';
+
+const ScrollToTop = ({ labels }: { labels: any }) => {
+    const [visible, setVisible] = useState(false);
+    useEffect(() => {
+        const toggleVisible = () => setVisible(window.scrollY > 300);
+        window.addEventListener('scroll', toggleVisible);
+        return () => window.removeEventListener('scroll', toggleVisible);
+    }, []);
+    return (
+        <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className={`fixed bottom-8 right-8 z-[100] p-4 bg-white text-black rounded-full shadow-2xl transition-all transform ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none hover:scale-110'}`}
+            title={labels.nav.scrollTop}
+        >
+            <ArrowUp className="w-6 h-6" />
+        </button>
+    );
+};
 
 function App() {
     const [showSplash, setShowSplash] = useState(true);
@@ -177,6 +195,7 @@ function App() {
                                 onRestart={handleRestart}
                                 corpName={corp.name}
                                 labels={t.diagnosis}
+                                lang={lang}
                             />
                         </div>
                         <div className="flex-1 order-1 md:order-2">
@@ -202,6 +221,9 @@ function App() {
                 onClose={() => setIsHubOpen(false)}
                 labels={t.knowledgeHub}
             />
+
+            {/* Scroll To Top */}
+            <ScrollToTop labels={t} />
 
             {/* Footer */}
             <footer className="relative z-10 py-6 text-center opacity-40 hover:opacity-100 transition-opacity mt-auto no-print">

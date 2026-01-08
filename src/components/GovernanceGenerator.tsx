@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { AlertTriangle, CheckCircle, Download, FileText, Share2, Printer, Lock } from 'lucide-react';
-import { } from '../types';
+import { AlertTriangle, CheckCircle, Download, Share2, Printer, Lock, MessageCircle } from 'lucide-react';
+import { Language } from '../utils/i18n';
 
 interface GovernanceGeneratorProps {
     score: number;
@@ -9,9 +9,10 @@ interface GovernanceGeneratorProps {
     corpName: string;
     leadEmail?: string;
     labels: any;
+    lang: Language;
 }
 
-const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels }) => {
+const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels, lang }) => {
     const [email, setEmail] = useState('');
     const [lgpdConsent, setLgpdConsent] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
@@ -140,15 +141,15 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                             <h4 className="text-red-400 font-bold mb-1 flex items-center gap-2 text-sm md:text-base tracking-wide uppercase">
                                 <Lock className="w-4 h-4" /> {labels.diagnosis.frictionDetected}: {dimLabel}
                             </h4>
-                            <p className="text-gray-400 text-xs md:text-sm mb-4">
-                                Gap: {dim.delta} points
+                            <p className="text-gray-400 text-[10px] md:text-xs mb-4 uppercase tracking-[0.2em]">
+                                DIFF: {dim.delta} POINTS
                             </p>
 
                             {/* Service Card */}
-                            <div className="mt-auto bg-black/40 p-4 rounded-lg border-l-2 border-l-vault-corp">
-                                <div className="text-xs text-vault-corp font-bold mb-1 tracking-widest">ECOSYSTEM RECOMMENDATION</div>
+                            <div className="mt-auto bg-black/40 p-4 rounded-lg border-l-2 border-l-vault-corp group/svc hover:bg-black/60 transition-colors">
+                                <div className="text-[9px] text-vault-corp font-black mb-1 tracking-[0.2em] uppercase">{labels.servicesTitle}</div>
                                 <h5 className="text-white font-bold text-sm mb-1">{recommendedService?.title || "Consulting Session"}</h5>
-                                <p className="text-gray-400 text-xs leading-relaxed">
+                                <p className="text-[11px] text-gray-500 leading-relaxed italic">
                                     {recommendedService?.desc || "Schedule a session to align these vectors."}
                                 </p>
                             </div>
@@ -177,16 +178,21 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
             </div>
 
             {/* CTA Footer */}
-            <div className="text-center mt-12 mb-12 no-print">
-                <p className="text-gray-400 mb-4">Need help negotiating these terms?</p>
-                <a
-                    href="https://www.ephata.solutions/portfolio"
-                    target="_blank"
-                    rel=" noreferrer"
-                    className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-bold rounded-full hover:scale-105 transition-transform"
-                >
-                    TALK TO AN EXPERT <FileText className="w-4 h-4" />
-                </a>
+            <div className="text-center mt-12 mb-12 no-print space-y-6">
+                <div className="inline-block p-1 rounded-3xl bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-emerald-500/20 p-[1px]">
+                    <div className="bg-vault-bg rounded-3xl px-8 py-10 flex flex-col items-center border border-white/5">
+                        <p className="text-gray-400 font-medium mb-6 tracking-wide">{labels.expertTitle}</p>
+                        <a
+                            href="https://wa.me/5519987102155"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black rounded-full hover:scale-105 transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] group"
+                        >
+                            <MessageCircle className="w-5 h-5 text-emerald-600 group-hover:scale-110 transition-transform" />
+                            {labels.expertBtn.toUpperCase()}
+                        </a>
+                    </div>
+                </div>
                 <div className="mt-8">
                     <button onClick={onRestart} className="text-gray-600 hover:text-white text-sm underline">
                         {labels.restart}
@@ -224,16 +230,16 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setShowEmailModal(false)}
-                                className="flex-1 py-3 text-gray-400 hover:text-white transition-colors"
+                                className="flex-1 py-3 text-gray-400 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest"
                             >
-                                Cancel
+                                {lang === 'en' ? 'Cancel' : 'Cancelar'}
                             </button>
                             <button
                                 onClick={handleExportCSV}
                                 disabled={!email || !lgpdConsent || isSubmitting}
-                                className={`flex-1 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
+                                className={`flex-1 py-3 bg-white text-black font-black rounded-lg hover:bg-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs uppercase tracking-widest`}
                             >
-                                {isSubmitting ? 'Sending...' : 'Download'}
+                                {isSubmitting ? (lang === 'en' ? 'Sending...' : 'Enviando...') : (lang === 'en' ? 'Download' : 'Baixar')}
                             </button>
                         </div>
                     </div>

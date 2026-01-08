@@ -43,13 +43,13 @@ const SliderTrack: React.FC<{
                 </div>
                 <div className="text-right">
                     {isCritical && (
-                        <span className="flex items-center gap-2 text-vault-gap font-bold text-xs bg-red-500/10 px-3 py-1 rounded-full animate-pulse border border-red-500/20">
-                            <span className="w-2 h-2 bg-red-500 rounded-full" /> HIGH FRICTION
+                        <span className="flex items-center gap-2 text-vault-gap font-bold text-[10px] bg-red-500/10 px-3 py-1 rounded-full animate-pulse border border-red-500/20 tracking-widest uppercase">
+                            <span className="w-1.5 h-1.5 bg-red-500 rounded-full" /> {labels.diagnosis.critical}
                         </span>
                     )}
                     {isOptimal && (
-                        <span className="flex items-center gap-2 text-vault-startup font-bold text-xs bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20">
-                            <span className="w-2 h-2 bg-green-500 rounded-full" /> SYNERGY
+                        <span className="flex items-center gap-2 text-vault-startup font-bold text-[10px] bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20 tracking-widest uppercase">
+                            <span className="w-1.5 h-1.5 bg-green-500 rounded-full" /> {labels.diagnosis.optimal}
                         </span>
                     )}
                 </div>
@@ -152,8 +152,8 @@ const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setS
     return (
         <div className="w-full max-w-4xl mx-auto p-4 pb-24">
             <div className="mb-12 text-center">
-                <h2 className="text-heading-hero text-white mb-4">{labels.stepTitle || "CALIBRATION"}</h2>
-                <p className="text-body-standard max-w-xl mx-auto">{labels.stepDescription || "Drag the sliders to reflect the reality of both entities. The distance between points represents potential friction."}</p>
+                <h2 className="text-heading-hero text-white mb-4 uppercase tracking-tighter">{labels.stepTitle}</h2>
+                <p className="text-body-standard max-w-xl mx-auto opacity-70 italic">{labels.instruction}</p>
             </div>
 
             <div className="glass-panel p-6 md:p-10 rounded-2xl relative">

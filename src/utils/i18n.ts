@@ -12,6 +12,7 @@ export const TRANSLATIONS = {
         },
         calibration: {
             stepTitle: "FRICTION EQUALIZER",
+            instruction: "Drag the sliders to reflect the reality of both entities.",
             dimensions: {
                 speed: {
                     label: "Operational Speed",
@@ -54,6 +55,8 @@ export const TRANSLATIONS = {
             print: "Print PDF",
             restart: "New Calibration",
             save: "Save to Portfolio",
+            expertTitle: "Need help negotiating these terms?",
+            expertBtn: "Talk to Marcio Almeida",
             servicesTitle: "RECOMMENDED EPHATA SERVICES",
             services: {
                 gae: {
@@ -76,6 +79,9 @@ export const TRANSLATIONS = {
         },
         portfolio: {
             title: "ANALYSIS PORTFOLIO",
+            aggregateTitle: "PORTFOLIO OVERVIEW",
+            avgScore: "Avg Synergy",
+            totalAnalyses: "Projects",
             emptyState: "No analyses saved yet.",
             date: "DATE",
             corp: "CORPORATION",
@@ -87,20 +93,24 @@ export const TRANSLATIONS = {
         nav: {
             home: "HOME",
             portfolio: "PORTFOLIO",
-            lang: "BR/EN"
+            lang: "BR/EN",
+            scrollTop: "Back to Top"
         },
         knowledgeHub: {
             title: "KNOWLEDGE HUB",
             aboutTitle: "ABOUT THE ALGORITHM",
-            aboutText: "PartnerFit uses a proprietary heuristic based on over 150 M&A and CVC cases. We analyze 4 critical friction dimensions to predict partnership longevity.",
+            aboutText: "PartnerFit utilizes a proprietary heuristic based on over 150 M&A and CVC cases. We analyze 4 critical friction dimensions to predict partnership longevity.",
             authorTitle: "ARCHITECTED BY",
             authorRole: "Ephata Founder & M&A Specialist",
+            authorBio: "Specialist in building strategic bridges between established corporations and high-growth ecosystems. Over 150 projects delivered.",
             synapsysTitle: "SYNAPSYS AI",
-            synapsysDesc: "Advanced intelligence for innovation ecosystems. Explore the full suite.",
+            synapsysDesc: "The advanced intelligence for innovation ecosystems. Discover the complete suite.",
             synapsysBtn: "ACCESS SYNAPSYS",
             helpTitle: "NEED HELP?",
             whatsappBtn: "Talk to Marcio",
+            whatsappUrl: "https://wa.me/5519987102155",
             portfolioBtn: "View Ephata Portfolio",
+            portfolioUrl: "https://ephata.com/portfolio",
             close: "Close"
         }
     },
@@ -117,6 +127,7 @@ export const TRANSLATIONS = {
         },
         calibration: {
             stepTitle: "EQUALIZADOR DE ATRITO",
+            instruction: "Tracione os sliders para refletir a realidade de ambas as entidades.",
             dimensions: {
                 speed: {
                     label: "Velocidade Operacional",
@@ -159,6 +170,8 @@ export const TRANSLATIONS = {
             print: "Imprimir PDF",
             restart: "Nova Calibração",
             save: "Salvar no Portfólio",
+            expertTitle: "Precisa de ajuda para negociar esse termos?",
+            expertBtn: "Falar com Marcio Almeida",
             servicesTitle: "SOLUÇÕES EPHATA RECOMENDADAS",
             services: {
                 gae: {
@@ -181,6 +194,9 @@ export const TRANSLATIONS = {
         },
         portfolio: {
             title: "PORTFÓLIO DE ANÁLISES",
+            aggregateTitle: "VISÃO GERAL DA CARTEIRA",
+            avgScore: "Média de Sinergia",
+            totalAnalyses: "Projetos",
             emptyState: "Nenhuma análise salva ainda.",
             date: "DATA",
             corp: "CORPORAÇÃO",
@@ -192,7 +208,8 @@ export const TRANSLATIONS = {
         nav: {
             home: "INÍCIO",
             portfolio: "PORTFÓLIO",
-            lang: "BR/EN"
+            lang: "BR/EN",
+            scrollTop: "Voltar ao Topo"
         },
         knowledgeHub: {
             title: "CENTRAL DE CONHECIMENTO",
@@ -200,12 +217,15 @@ export const TRANSLATIONS = {
             aboutText: "O PartnerFit utiliza uma heurística proprietária baseada em mais de 150 casos de M&A e CVC. Analisamos 4 dimensões críticas de atrito para prever a longevidade da parceria.",
             authorTitle: "ARQUITETADO POR",
             authorRole: "Fundador Ephata & Especialista em M&A",
+            authorBio: "Especialista em construir pontes estratégicas entre corporações estabelecidas e ecossistemas de alto crescimento. Mais de 150 projetos entregues.",
             synapsysTitle: "SYNAPSYS AI",
             synapsysDesc: "A inteligência avançada para ecossistemas de inovação. Conheça a suite completa.",
             synapsysBtn: "ACESSAR SYNAPSYS",
             helpTitle: "PRECISA DE AJUDA?",
-            whatsappBtn: "Fafal com Marcio",
+            whatsappBtn: "Falar com Marcio",
+            whatsappUrl: "https://wa.me/5519987102155",
             portfolioBtn: "Ver Portfólio Ephata",
+            portfolioUrl: "https://ephata.com/portfolio",
             close: "Fechar"
         }
     }

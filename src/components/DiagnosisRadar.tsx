@@ -44,14 +44,14 @@ const DiagnosisRadar: React.FC<DiagnosisRadarProps> = ({ corp, startup, labels }
                 </RadarChart>
             </ResponsiveContainer>
 
-            <div className="absolute bottom-4 right-6 flex gap-4 text-xs">
+            <div className="absolute bottom-4 right-6 flex gap-4 text-[10px] font-bold tracking-widest uppercase">
                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-vault-corp"></div>
-                    <span className="text-gray-400">Corp</span>
+                    <div className="w-2 h-2 rounded-full bg-vault-corp shadow-[0_0_8px_#00FFFF]"></div>
+                    <span className="text-gray-500">{labels.identity.corpLabel}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-vault-startup"></div>
-                    <span className="text-gray-400">Startup</span>
+                    <div className="w-2 h-2 rounded-full bg-vault-startup shadow-[0_0_8px_#22c55e]"></div>
+                    <span className="text-gray-500">{labels.identity.startupLabel}</span>
                 </div>
             </div>
         </div>
