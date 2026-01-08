@@ -195,7 +195,6 @@ function App() {
                                 onRestart={handleRestart}
                                 corpName={corp.name}
                                 labels={t}
-                                lang={lang}
                             />
                         </div>
                         <div className="flex-1 order-1 md:order-2">

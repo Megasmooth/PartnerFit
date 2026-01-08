@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AlertTriangle, CheckCircle, Download, Share2, Printer, Lock, MessageCircle } from 'lucide-react';
-import { Language } from '../utils/i18n';
+
 
 interface GovernanceGeneratorProps {
     score: number;
@@ -9,10 +9,9 @@ interface GovernanceGeneratorProps {
     corpName: string;
     leadEmail?: string;
     labels: any;
-    lang: Language;
 }
 
-const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels, lang }) => {
+const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels }) => {
     const [email, setEmail] = useState('');
     const [lgpdConsent, setLgpdConsent] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
@@ -38,7 +37,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
             }
         } else {
             navigator.clipboard.writeText(window.location.href);
-            alert('Link copied to clipboard!');
+            alert(labels.diagnosis.shareSuccess);
         }
     };
 
@@ -96,7 +95,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
             {/* Header Result */}
             <div className="glass-panel p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 border-t-4 border-t-white/10 print:border-none print:shadow-none">
                 <div className="flex-1 text-center md:text-left">
-                    <h2 className="text-body-highlight text-gray-400 mb-2">{labels.stepTitle}</h2>
+                    <h2 className="text-body-highlight text-gray-400 mb-2">{labels.diagnosis.stepTitle}</h2>
                     <div className="text-heading-hero text-white mb-2">
                         {score}<span className="text-2xl md:text-3xl text-gray-600">/100</span>
                     </div>
@@ -106,13 +105,13 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                 </div>
 
                 <div className="flex gap-4 no-print">
-                    <button onClick={handleShare} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors tooltip" title={labels.share}>
+                    <button onClick={handleShare} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors tooltip" title={labels.diagnosis.share}>
                         <Share2 className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </button>
-                    <button onClick={handlePrint} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.print}>
+                    <button onClick={handlePrint} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.diagnosis.print}>
                         <Printer className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </button>
-                    <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.exportCsv}>
+                    <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.diagnosis.exportCsv}>
                         <Download className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </button>
                 </div>
@@ -147,7 +146,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
 
                             {/* Service Card */}
                             <div className="mt-auto bg-black/40 p-4 rounded-lg border-l-2 border-l-vault-corp group/svc hover:bg-black/60 transition-colors">
-                                <div className="text-[9px] text-vault-corp font-black mb-1 tracking-[0.2em] uppercase">{labels.servicesTitle}</div>
+                                <div className="text-[9px] text-vault-corp font-black mb-1 tracking-[0.2em] uppercase">{labels.diagnosis.servicesTitle}</div>
                                 <h5 className="text-white font-bold text-sm mb-1">{recommendedService?.title || "Consulting Session"}</h5>
                                 <p className="text-[11px] text-gray-500 leading-relaxed italic">
                                     {recommendedService?.desc || "Schedule a session to align these vectors."}
@@ -181,21 +180,21 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
             <div className="text-center mt-12 mb-12 no-print space-y-6">
                 <div className="inline-block p-1 rounded-3xl bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-emerald-500/20 p-[1px]">
                     <div className="bg-vault-bg rounded-3xl px-8 py-10 flex flex-col items-center border border-white/5">
-                        <p className="text-gray-400 font-medium mb-6 tracking-wide">{labels.expertTitle}</p>
+                        <p className="text-gray-400 font-medium mb-6 tracking-wide">{labels.diagnosis.expertTitle}</p>
                         <a
-                            href="https://wa.me/5519987102155"
+                            href={labels.knowledgeHub.whatsappUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black rounded-full hover:scale-105 transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] group"
                         >
                             <MessageCircle className="w-5 h-5 text-emerald-600 group-hover:scale-110 transition-transform" />
-                            {labels.expertBtn.toUpperCase()}
+                            {labels.diagnosis.expertBtn.toUpperCase()}
                         </a>
                     </div>
                 </div>
                 <div className="mt-8">
                     <button onClick={onRestart} className="text-gray-600 hover:text-white text-sm underline">
-                        {labels.restart}
+                        {labels.diagnosis.restart}
                     </button>
                 </div>
             </div>
@@ -204,12 +203,12 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
             {showEmailModal && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                     <div className="bg-[#1a1a1a] p-8 rounded-2xl w-full max-w-md border border-white/10 shadow-2xl">
-                        <h3 className="text-xl font-bold text-white mb-4">Export Analysis</h3>
-                        <p className="text-gray-400 text-sm mb-6">Receive the raw CSV data and full report via email.</p>
+                        <h3 className="text-xl font-bold text-white mb-4">{labels.diagnosis.exportCsv}</h3>
+                        <p className="text-gray-400 text-sm mb-6">{labels.diagnosis.modalDesc}</p>
 
                         <input
                             type="email"
-                            placeholder="Your work email"
+                            placeholder={labels.diagnosis.modalPlaceholder}
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                             className="w-full bg-black border border-gray-700 p-3 rounded-lg text-white mb-4 focus:border-green-500 outline-none"
@@ -223,7 +222,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                                 className="mt-1 w-4 h-4 rounded border-gray-700 bg-black checked:bg-green-500"
                             />
                             <span className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors">
-                                I agree to the processing of data for business contact purposes in accordance with LGPD/GDPR.
+                                {labels.diagnosis.modalConsent}
                             </span>
                         </label>
 
@@ -232,14 +231,14 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                                 onClick={() => setShowEmailModal(false)}
                                 className="flex-1 py-3 text-gray-400 hover:text-white transition-colors text-sm font-bold uppercase tracking-widest"
                             >
-                                {lang === 'en' ? 'Cancel' : 'Cancelar'}
+                                {labels.diagnosis.cancel}
                             </button>
                             <button
                                 onClick={handleExportCSV}
                                 disabled={!email || !lgpdConsent || isSubmitting}
                                 className={`flex-1 py-3 bg-white text-black font-black rounded-lg hover:bg-emerald-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-xs uppercase tracking-widest`}
                             >
-                                {isSubmitting ? (lang === 'en' ? 'Sending...' : 'Enviando...') : (lang === 'en' ? 'Download' : 'Baixar')}
+                                {isSubmitting ? labels.diagnosis.sending : labels.diagnosis.download}
                             </button>
                         </div>
                     </div>
