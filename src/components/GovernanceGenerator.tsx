@@ -11,13 +11,6 @@ interface GovernanceGeneratorProps {
     labels: any;
 }
 
-const CLAUSES_MAP: Record<string, string> = {
-    speed: "Clause 4.2 (Sandbox): The project shall operate with an autonomous budget of up to $50k, exempt from the standard CAPEX committee approval flow, to ensure agility.",
-    risk: "Clause 7.1 (Safe Harbor): Both parties acknowledge the experimental nature of the Pilot. KPIs shall focus on 'Learning Metrics' rather than purely ROI for the first 90 days.",
-    cashflow: "Clause 3.4 (Fast-Track Payment): The Corporation agrees to a D+15 payment term for invoices under $10k, waiving the standard 90-day supplier registration requirement.",
-    ip: "Clause 9.0 (Background vs Foreground IP): Background IP remains with the Startup. Only new IP specifically created for this integration (Foreground) shall be joint property.",
-};
-
 const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels }) => {
     const [email, setEmail] = useState('');
     const [lgpdConsent, setLgpdConsent] = useState(false);
@@ -95,67 +88,89 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
         setShowEmailModal(false);
     };
 
-    const translatedRiskLevel = labels[riskLevel.toLowerCase()] || riskLevel;
+    const translatedRiskLevel = labels.diagnosis[riskLevel.toLowerCase()] || riskLevel;
 
     return (
         <div className="w-full max-w-5xl mx-auto pb-24">
             {/* Header Result */}
-            <div className="glass-panel p-8 rounded-2xl mb-8 flex flex-col md:flex-row items-center justify-between gap-8 border-t-4 border-t-white/10 print:border-none print:shadow-none">
-                <div className="flex-1">
-                    <h2 className="text-gray-400 text-sm tracking-widest mb-2">{labels.stepTitle}</h2>
-                    <div className="text-5xl md:text-7xl font-black text-white mb-2">
-                        {score}<span className="text-2xl text-gray-600">/100</span>
+            <div className="glass-panel p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 border-t-4 border-t-white/10 print:border-none print:shadow-none">
+                <div className="flex-1 text-center md:text-left">
+                    <h2 className="text-body-highlight text-gray-400 mb-2">{labels.stepTitle}</h2>
+                    <div className="text-heading-hero text-white mb-2">
+                        {score}<span className="text-2xl md:text-3xl text-gray-600">/100</span>
                     </div>
-                    <div className={`text-xl tracking-widest font-bold ${riskColor}`}>
-                        {labels.levelLabel}: {translatedRiskLevel}
+                    <div className={`text-xl md:text-2xl tracking-widest font-bold ${riskColor}`}>
+                        {labels.diagnosis.levelLabel}: {translatedRiskLevel}
                     </div>
                 </div>
 
                 <div className="flex gap-4 no-print">
                     <button onClick={handleShare} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors tooltip" title={labels.share}>
-                        <Share2 className="w-6 h-6 text-white" />
+                        <Share2 className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </button>
                     <button onClick={handlePrint} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.print}>
-                        <Printer className="w-6 h-6 text-white" />
+                        <Printer className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </button>
                     <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.exportCsv}>
-                        <Download className="w-6 h-6 text-white" />
+                        <Download className="w-5 h-5 md:w-6 md:h-6 text-white" />
                     </button>
                 </div>
             </div>
 
             {/* Suggested Governance Clauses (The "Meat") */}
+            {/* Suggested Governance Clauses (The "Meat") */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                {analysis.filter((dim: any) => dim.status !== 'optimal').map((dim: any) => (
-                    <div key={dim.id} className="glass-panel p-6 rounded-xl border border-red-500/20 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-2 opacity-10">
-                            <AlertTriangle className="w-24 h-24 text-red-500" />
-                        </div>
-                        <h4 className="text-red-400 font-bold mb-1 flex items-center gap-2">
-                            <Lock className="w-4 h-4" /> {labels.frictionDetected}: {dim.label.toUpperCase()}
-                        </h4>
-                        <p className="text-gray-400 text-sm mb-4">
-                            Gap detected: {dim.delta} points.
-                        </p>
-                        <div className="bg-black/40 p-4 rounded-lg border-l-2 border-l-red-500">
-                            <p className="text-gray-300 font-mono text-xs leading-relaxed">
-                                {CLAUSES_MAP[dim.id as string] || "Standard integration clause recommended."}
+                {analysis.filter((dim: any) => dim.status !== 'optimal').map((dim: any) => {
+                    // SMART DIAGNOSIS ENGINE logic
+                    let recommendedService = null;
+
+                    if (dim.id === 'ip') recommendedService = labels.diagnosis.services.gae;
+                    else if (dim.id === 'risk') recommendedService = labels.diagnosis.services.asir;
+                    else if (dim.id === 'speed') recommendedService = labels.diagnosis.services.saem;
+                    else if (dim.id === 'cashflow') recommendedService = labels.diagnosis.services.etcd;
+
+                    // Determine label name from translation if possible, else fallback
+                    const dimLabel = labels.calibration.dimensions[dim.id]?.label || dim.label;
+
+                    return (
+                        <div key={dim.id} className="glass-panel p-6 rounded-xl border border-red-500/20 relative overflow-hidden flex flex-col h-full">
+                            <div className="absolute top-0 right-0 p-2 opacity-10">
+                                <AlertTriangle className="w-24 h-24 text-red-500" />
+                            </div>
+                            <h4 className="text-red-400 font-bold mb-1 flex items-center gap-2 text-sm md:text-base tracking-wide uppercase">
+                                <Lock className="w-4 h-4" /> {labels.diagnosis.frictionDetected}: {dimLabel}
+                            </h4>
+                            <p className="text-gray-400 text-xs md:text-sm mb-4">
+                                Gap: {dim.delta} points
                             </p>
+
+                            {/* Service Card */}
+                            <div className="mt-auto bg-black/40 p-4 rounded-lg border-l-2 border-l-vault-corp">
+                                <div className="text-xs text-vault-corp font-bold mb-1 tracking-widest">ECOSYSTEM RECOMMENDATION</div>
+                                <h5 className="text-white font-bold text-sm mb-1">{recommendedService?.title || "Consulting Session"}</h5>
+                                <p className="text-gray-400 text-xs leading-relaxed">
+                                    {recommendedService?.desc || "Schedule a session to align these vectors."}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
 
                 {analysis.filter((dim: any) => dim.status === 'optimal').length > 0 && (
                     <div className="glass-panel p-6 rounded-xl border border-green-500/20 relative">
-                        <h4 className="text-green-400 font-bold mb-4 flex items-center gap-2">
-                            <CheckCircle className="w-4 h-4" /> {labels.optimalZone}
+                        <h4 className="text-green-400 font-bold mb-4 flex items-center gap-2 text-sm md:text-base tracking-wide">
+                            <CheckCircle className="w-4 h-4" /> {labels.diagnosis.optimalZone}
                         </h4>
-                        <ul className="space-y-2">
-                            {analysis.filter((dim: any) => dim.status === 'optimal').map((dim: any) => (
-                                <li key={dim.id} className="text-gray-400 text-sm flex items-center gap-2">
-                                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full" /> {dim.label}
-                                </li>
-                            ))}
+                        <ul className="space-y-4">
+                            {analysis.filter((dim: any) => dim.status === 'optimal').map((dim: any) => {
+                                const dimLabel = labels.calibration.dimensions[dim.id]?.label || dim.label;
+                                return (
+                                    <li key={dim.id} className="text-gray-400 text-sm flex items-center gap-2">
+                                        <div className="w-2 h-2 bg-green-500 rounded-full" />
+                                        {dimLabel}
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                 )}

@@ -9,13 +9,15 @@ import { ActorProfile } from './types';
 import { useSynergyScore } from './utils/logic';
 import { TRANSLATIONS, Language } from './utils/i18n';
 import { storage, SavedAnalysis } from './utils/storage';
-import { Zap, Home, BookOpen, Globe } from 'lucide-react';
+import { Zap, Home, BookOpen, Globe, HelpCircle } from 'lucide-react';
+import KnowledgeHub from './components/KnowledgeHub';
 
 function App() {
     const [showSplash, setShowSplash] = useState(true);
     const [lang, setLang] = useState<Language>('pt');
     const [step, setStep] = useState<'identity' | 'calibration' | 'diagnosis' | 'portfolio'>('identity');
     const [portfolio, setPortfolio] = useState<SavedAnalysis[]>([]);
+    const [isHubOpen, setIsHubOpen] = useState(false);
 
     const t = TRANSLATIONS[lang];
 
@@ -124,6 +126,14 @@ function App() {
                     </button>
 
                     <button
+                        onClick={() => setIsHubOpen(true)}
+                        className="p-3 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+                        title="Help / Knowledge Hub"
+                    >
+                        <HelpCircle className="w-5 h-5" />
+                    </button>
+
+                    <button
                         onClick={toggleLang}
                         className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all ml-2"
                     >
@@ -170,7 +180,7 @@ function App() {
                             />
                         </div>
                         <div className="flex-1 order-1 md:order-2">
-                            <DiagnosisRadar corp={corp} startup={startup} />
+                            <DiagnosisRadar corp={corp} startup={startup} labels={t} />
                         </div>
                     </div>
                 )}
@@ -185,6 +195,13 @@ function App() {
                 )}
 
             </main>
+
+            {/* Knowledge Hub Drawer */}
+            <KnowledgeHub
+                isOpen={isHubOpen}
+                onClose={() => setIsHubOpen(false)}
+                labels={t.knowledgeHub}
+            />
 
             {/* Footer */}
             <footer className="relative z-10 py-6 text-center opacity-40 hover:opacity-100 transition-opacity mt-auto no-print">

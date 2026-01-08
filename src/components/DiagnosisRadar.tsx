@@ -5,11 +5,12 @@ import { ActorProfile, DIMENSIONS } from '../types';
 interface DiagnosisRadarProps {
     corp: ActorProfile;
     startup: ActorProfile;
+    labels: any;
 }
 
-const DiagnosisRadar: React.FC<DiagnosisRadarProps> = ({ corp, startup }) => {
+const DiagnosisRadar: React.FC<DiagnosisRadarProps> = ({ corp, startup, labels }) => {
     const data = DIMENSIONS.map(dim => ({
-        subject: dim.label,
+        subject: labels.calibration.dimensions[dim.id].label,
         A: corp.values[dim.id as keyof typeof corp.values],
         B: startup.values[dim.id as keyof typeof startup.values],
         fullMark: 10,

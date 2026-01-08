@@ -12,20 +12,44 @@
   .glass-panel {
     @apply bg-vault-card backdrop-blur-md border border-white/10 shadow-xl;
   }
+
+  /* Typography Standardization */
+  .text-heading-hero {
+    @apply text-4xl md:text-6xl font-black tracking-tighter;
+  }
+
+  .text-heading-section {
+    @apply text-2xl md:text-3xl font-bold tracking-wide;
+  }
+
+  .text-body-highlight {
+    @apply text-sm md:text-base font-bold tracking-widest uppercase;
+  }
+
+  .text-body-standard {
+    @apply text-sm md:text-base leading-relaxed text-gray-300;
+  }
+
+  .text-body-caption {
+    @apply text-xs md:text-sm text-gray-400 font-medium;
+  }
+
   .neon-text {
     text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
   }
-  
+
   /* Print Styles for PDF Export */
   @media print {
     .no-print {
       display: none !important;
     }
+
     body {
       background: white !important;
       color: black !important;
       overflow: visible !important;
     }
+
     .print-break-before {
       page-break-before: always;
     }
