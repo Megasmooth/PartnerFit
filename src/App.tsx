@@ -171,7 +171,7 @@ function App() {
                         setCorpName={(n) => setCorp({ ...corp, name: n })}
                         setStartupName={(n) => setStartup({ ...startup, name: n })}
                         onNext={handleNext}
-                        labels={t.identity} // Passing labels prop we need to add to component
+                        labels={t}
                     />
                 )}
 
@@ -182,7 +182,7 @@ function App() {
                         setCorpValue={(id, val) => setCorp({ ...corp, values: { ...corp.values, [id]: val } })}
                         setStartupValue={(id, val) => setStartup({ ...startup, values: { ...startup.values, [id]: val } })}
                         onNext={handleNext}
-                        labels={t.calibration}
+                        labels={t}
                     />
                 )}
 
@@ -194,7 +194,7 @@ function App() {
                                 analysis={analysis.dimensionAnalysis}
                                 onRestart={handleRestart}
                                 corpName={corp.name}
-                                labels={t.diagnosis}
+                                labels={t}
                                 lang={lang}
                             />
                         </div>
@@ -219,7 +219,7 @@ function App() {
             <KnowledgeHub
                 isOpen={isHubOpen}
                 onClose={() => setIsHubOpen(false)}
-                labels={t.knowledgeHub}
+                labels={t}
             />
 
             {/* Scroll To Top */}

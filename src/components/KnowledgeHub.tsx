@@ -36,7 +36,7 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                                 <div className="p-2 bg-emerald-500/10 rounded-lg">
                                     <BookOpen className="w-5 h-5 text-emerald-400" />
                                 </div>
-                                <h2 className="text-xl font-bold text-white tracking-tight uppercase">{labels.title}</h2>
+                                <h2 className="text-xl font-bold text-white tracking-tight uppercase">{labels.knowledgeHub.title}</h2>
                             </div>
                             <button
                                 onClick={onClose}
@@ -59,11 +59,11 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                                         <User className="w-10 h-10 text-emerald-400" />
                                     </div>
                                     <div>
-                                        <div className="text-[10px] font-black text-emerald-500 mb-1 tracking-[0.2em] uppercase">{labels.authorTitle}</div>
+                                        <div className="text-[10px] font-black text-emerald-500 mb-1 tracking-[0.2em] uppercase">{labels.knowledgeHub.authorTitle}</div>
                                         <h3 className="text-2xl font-bold text-white mb-1">Marcio Almeida</h3>
-                                        <p className="text-sm font-medium text-emerald-400/80 mb-3">{labels.authorRole}</p>
+                                        <p className="text-sm font-medium text-emerald-400/80 mb-3">{labels.knowledgeHub.authorRole}</p>
                                         <p className="text-xs text-gray-400 leading-relaxed max-w-sm">
-                                            {labels.authorBio}
+                                            {labels.knowledgeHub.authorBio}
                                         </p>
                                     </div>
                                 </div>
@@ -73,11 +73,11 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                             <div className="space-y-4">
                                 <div className="flex items-center gap-2">
                                     <Brain className="w-5 h-5 text-cyan-400" />
-                                    <h3 className="text-sm font-bold text-white tracking-widest uppercase">{labels.aboutTitle}</h3>
+                                    <h3 className="text-sm font-bold text-white tracking-widest uppercase">{labels.knowledgeHub.aboutTitle}</h3>
                                 </div>
                                 <div className="p-5 bg-white/5 rounded-xl border border-white/5">
                                     <p className="text-gray-400 leading-relaxed text-sm">
-                                        {labels.aboutText}
+                                        {labels.knowledgeHub.aboutText}
                                     </p>
                                 </div>
                             </div>
@@ -90,10 +90,10 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                                     <div className="flex justify-between items-start mb-4">
                                         <div className="space-y-1">
                                             <h4 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-                                                {labels.synapsysTitle}
+                                                {labels.knowledgeHub.synapsysTitle}
                                             </h4>
                                             <p className="text-xs text-gray-400 max-w-[200px] leading-relaxed">
-                                                {labels.synapsysDesc}
+                                                {labels.knowledgeHub.synapsysDesc}
                                             </p>
                                         </div>
                                         <div className="p-2 bg-purple-500/10 rounded-lg">
@@ -102,7 +102,7 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                                     </div>
 
                                     <button className="w-full mt-2 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-white text-xs tracking-widest uppercase shadow-lg shadow-purple-900/20 hover:shadow-purple-900/40 hover:scale-[1.02] transition-all transform flex items-center justify-center gap-2">
-                                        {labels.synapsysBtn} <ExternalLink className="w-3 h-3" />
+                                        {labels.knowledgeHub.synapsysBtn} <ExternalLink className="w-3 h-3" />
                                     </button>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                             {/* E. Action Grid & Footer */}
                             <div className="grid grid-cols-1 gap-3">
                                 <a
-                                    href={labels.whatsappUrl}
+                                    href={labels.knowledgeHub.whatsappUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-between p-4 bg-emerald-500/5 border border-emerald-500/10 rounded-xl hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-all group"
@@ -119,13 +119,13 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                                         <div className="p-2 bg-emerald-500/10 rounded-lg text-emerald-400">
                                             <MessageCircle className="w-5 h-5" />
                                         </div>
-                                        <span className="font-bold text-white text-sm uppercase tracking-wide">{labels.whatsappBtn}</span>
+                                        <span className="font-bold text-white text-sm uppercase tracking-wide">{labels.knowledgeHub.whatsappBtn}</span>
                                     </div>
                                     <ExternalLink className="w-4 h-4 text-emerald-500 opacity-40 group-hover:opacity-100 transition-opacity" />
                                 </a>
 
                                 <a
-                                    href={labels.portfolioUrl}
+                                    href={labels.knowledgeHub.portfolioUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="flex items-center justify-between p-4 bg-cyan-500/5 border border-cyan-500/10 rounded-xl hover:bg-cyan-500/10 hover:border-cyan-500/20 transition-all group"
@@ -134,7 +134,7 @@ const KnowledgeHub: React.FC<KnowledgeHubProps> = ({ isOpen, onClose, labels }) 
                                         <div className="p-2 bg-cyan-500/10 rounded-lg text-cyan-400">
                                             <FileText className="w-5 h-5" />
                                         </div>
-                                        <span className="font-bold text-white text-sm uppercase tracking-wide">{labels.portfolioBtn}</span>
+                                        <span className="font-bold text-white text-sm uppercase tracking-wide">{labels.knowledgeHub.portfolioBtn}</span>
                                     </div>
                                     <ExternalLink className="w-4 h-4 text-cyan-500 opacity-40 group-hover:opacity-100 transition-opacity" />
                                 </a>

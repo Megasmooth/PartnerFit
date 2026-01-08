@@ -16,7 +16,7 @@ const IdentitySetup: React.FC<IdentitySetupProps> = ({ corp, startup, setCorpNam
 
     return (
         <div className="w-full max-w-4xl animate-in fade-in slide-in-from-bottom-8 duration-700">
-            <h2 className="text-heading-section text-center text-white mb-8 md:mb-12">{labels.stepTitle}</h2>
+            <h2 className="text-heading-section text-center text-white mb-8 md:mb-12">{labels.identity.stepTitle}</h2>
 
             <div className="flex flex-col md:flex-row gap-6 md:gap-8 mb-12">
                 {/* Corp Input */}
@@ -25,12 +25,12 @@ const IdentitySetup: React.FC<IdentitySetupProps> = ({ corp, startup, setCorpNam
                         <Building2 className="w-24 h-24 md:w-32 md:h-32 text-cyan-400" />
                     </div>
                     <div className="relative z-10">
-                        <label className="text-body-highlight text-cyan-400 mb-3 block">{labels.corpLabel}</label>
+                        <label className="text-body-highlight text-cyan-400 mb-3 block">{labels.identity.corpLabel}</label>
                         <input
                             type="text"
                             value={corp.name}
                             onChange={(e) => setCorpName(e.target.value)}
-                            placeholder={labels.corpPlaceholder}
+                            placeholder={labels.identity.corpPlaceholder}
                             className="w-full bg-transparent border-b-2 border-white/20 text-xl md:text-2xl font-bold py-2 text-white focus:outline-none focus:border-cyan-400 transition-colors placeholder:text-white/20"
                         />
                     </div>
@@ -42,12 +42,12 @@ const IdentitySetup: React.FC<IdentitySetupProps> = ({ corp, startup, setCorpNam
                         <Rocket className="w-24 h-24 md:w-32 md:h-32 text-green-400" />
                     </div>
                     <div className="relative z-10">
-                        <label className="text-body-highlight text-green-400 mb-3 block">{labels.startupLabel}</label>
+                        <label className="text-body-highlight text-green-400 mb-3 block">{labels.identity.startupLabel}</label>
                         <input
                             type="text"
                             value={startup.name}
                             onChange={(e) => setStartupName(e.target.value)}
-                            placeholder={labels.startupPlaceholder}
+                            placeholder={labels.identity.startupPlaceholder}
                             className="w-full bg-transparent border-b-2 border-white/20 text-xl md:text-2xl font-bold py-2 text-white focus:outline-none focus:border-green-400 transition-colors placeholder:text-white/20"
                         />
                     </div>
@@ -65,7 +65,7 @@ const IdentitySetup: React.FC<IdentitySetupProps> = ({ corp, startup, setCorpNam
                             : 'bg-white/10 text-white/30 cursor-not-allowed'}
           `}
                 >
-                    {labels.nextBtn}
+                    {labels.identity.nextBtn}
                 </button>
             </div>
         </div>

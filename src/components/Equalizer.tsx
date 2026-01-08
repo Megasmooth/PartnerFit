@@ -152,8 +152,8 @@ const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setS
     return (
         <div className="w-full max-w-4xl mx-auto p-4 pb-24">
             <div className="mb-12 text-center">
-                <h2 className="text-heading-hero text-white mb-4 uppercase tracking-tighter">{labels.stepTitle}</h2>
-                <p className="text-body-standard max-w-xl mx-auto opacity-70 italic">{labels.instruction}</p>
+                <h2 className="text-heading-hero text-white mb-4 uppercase tracking-tighter">{labels.calibration.stepTitle}</h2>
+                <p className="text-body-standard max-w-xl mx-auto opacity-70 italic">{labels.calibration.instruction}</p>
             </div>
 
             <div className="glass-panel p-6 md:p-10 rounded-2xl relative">
@@ -175,7 +175,7 @@ const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setS
                     onClick={onNext}
                     className="px-12 py-4 rounded-full bg-white text-black font-black tracking-widest text-sm md:text-base hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300"
                 >
-                    {labels.nextBtn}
+                    {labels.calibration.nextBtn}
                 </button>
             </div>
         </div>
