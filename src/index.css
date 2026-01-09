@@ -3,8 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-vault-bg text-vault-text font-sans antialiased overflow-y-auto;
+    @apply bg-vault-bg text-vault-text font-sans antialiased overflow-x-hidden selection:bg-emerald-500/30;
+    min-height: 100vh;
   }
 }
 

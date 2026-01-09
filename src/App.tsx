@@ -21,13 +21,27 @@ const ScrollToTop = ({ labels }: { labels: any }) => {
         return () => window.removeEventListener('scroll', toggleVisible);
     }, []);
     return (
-        <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className={`fixed bottom-8 right-8 z-[100] p-4 bg-white text-black rounded-full shadow-2xl transition-all transform ${visible ? 'opacity-100 scale-100' : 'opacity-0 scale-50 pointer-events-none hover:scale-110'}`}
-            title={labels.nav.scrollTop}
-        >
-            <ArrowUp className="w-6 h-6" />
-        </button>
+        <AnimatePresence>
+            {visible && (
+                <motion.button
+                    initial={{ opacity: 0, scale: 0.5, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.5, y: 20 }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="fixed bottom-8 right-8 z-[100] p-4 bg-white text-black rounded-full shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all group overflow-hidden"
+                    title={labels.nav.scrollTop}
+                >
+                    <motion.div
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        className="absolute inset-0 bg-emerald-500/10"
+                    />
+                    <ArrowUp className="w-6 h-6 relative z-10" />
+                </motion.button>
+            )}
+        </AnimatePresence>
     );
 };
 
@@ -102,7 +116,7 @@ function App() {
     }
 
     return (
-        <div className="min-h-screen flex flex-col items-center p-4 relative overflow-x-hidden bg-vault-bg text-white">
+        <div className="min-h-screen flex flex-col items-center p-4 relative bg-vault-bg text-white">
             {/* Background Ambience */}
             <div className="fixed inset-0 bg-vault-bg z-0" />
             <div className="fixed top-0 left-0 w-full h-[500px] bg-gradient-to-b from-emerald-900/10 to-transparent pointer-events-none z-0" />
