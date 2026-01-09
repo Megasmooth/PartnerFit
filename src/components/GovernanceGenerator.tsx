@@ -1,26 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { AlertTriangle, CheckCircle, Download, Share2, Printer, Lock, MessageCircle, Sparkles, TrendingUp, Info } from 'lucide-react';
-
+import { generateExecutivePDF } from '../utils/pdfGenerator';
 
 interface GovernanceGeneratorProps {
     score: number;
     analysis: any[];
     onRestart: () => void;
     corpName: string;
+    startupName: string; // Added startupName
     leadEmail?: string;
     labels: any;
 }
 
-const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, labels }) => {
+const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analysis, onRestart, corpName, startupName, labels }) => {
     const [email, setEmail] = useState('');
     const [lgpdConsent, setLgpdConsent] = useState(false);
     const [showEmailModal, setShowEmailModal] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const riskLevel = score > 80 ? 'OPTIMAL' : score > 50 ? 'MANAGEABLE' : 'CRITICAL';
+    const scenarioKey = score > 80 ? 'optimal' : score > 50 ? 'manageable' : 'critical';
+    const riskLevel = scenarioKey.toUpperCase();
 
-    const handlePrint = () => {
-        window.print();
+    // Stable Quote for PDF and UI
+    const randomQuote = useMemo(() => {
+        const quotes = labels.portfolio.marcioQuotes[scenarioKey];
+        return quotes[Math.floor(Math.random() * quotes.length)];
+    }, [scenarioKey, labels]);
+
+    const handlePrint = async () => {
+        const scenario = labels.portfolio.scenarios[scenarioKey];
+        await generateExecutivePDF({
+            corpName,
+            startupName,
+            score,
+            riskLevel,
+            analysis,
+            date: new Date().toLocaleDateString(),
+            scenario: {
+                title: scenario.title,
+                desc: scenario.desc,
+                checklist: scenario.checklist
+            },
+            authorQuote: randomQuote
+        }, labels);
     };
 
     const handleShare = async () => {

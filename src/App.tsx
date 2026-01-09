@@ -246,6 +246,7 @@ function App() {
                                         analysis={analysis.dimensionAnalysis}
                                         onRestart={handleRestart}
                                         corpName={corp.name}
+                                        startupName={startup.name}
                                         labels={t}
                                     />
                                 </div>

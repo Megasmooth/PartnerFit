@@ -4,6 +4,7 @@ import { TranslationKeys } from '../utils/i18n';
 import { ArrowLeft, Calendar, TrendingUp, BarChart3, Shield, Download, Briefcase, Sparkles, FileText, Share2, Printer, X } from 'lucide-react';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar, Legend, Tooltip } from 'recharts';
 import { DIMENSIONS } from '../types';
+import { generatePortfolioPDF } from '../utils/pdfGenerator';
 
 interface PortfolioScreenProps {
     analyses: SavedAnalysis[];
@@ -47,8 +48,8 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
         }, 0) / analyses.length).toFixed(1)
         : "0.0";
 
-    const handleExportExecutive = () => {
-        window.print();
+    const handleExportExecutive = async () => {
+        await generatePortfolioPDF(analyses, lang);
     };
 
     const handleShareVault = async () => {
