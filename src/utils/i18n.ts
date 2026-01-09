@@ -106,7 +106,8 @@ export const TRANSLATIONS = {
             boardExportBtn: "Export Board Package (PDF)",
             avgProfile: "Portfolio_Average_Profile",
             avgAlignment: "Average Alignment across all units",
-            average: "Average"
+            average: "Average",
+            newAnalysisBtn: "NEW ANALYSIS"
         },
         nav: {
             home: "HOME",
@@ -143,8 +144,8 @@ export const TRANSLATIONS = {
             authorBio: "With over 18 years of global experience and +150 transformation projects delivered, Marcio Almeida is the authority behind this app's algorithm. Creator of the RICE© and Synapsys frameworks, he has developed more than 18,000 leaders worldwide.",
             authorLinkedin: "LinkedIn Profile",
             authorWebsite: "Official Website",
-            synapsysTitle: "SYNAPSYS AI",
-            synapsysDesc: "The advanced intelligence for innovation ecosystems. Discover the complete suite.",
+            synapsysTitle: "SYNAPSYS",
+            synapsysDesc: "The advanced ecosystem to teach users how to free themselves and take back ownership of their thought and intellect.",
             synapsysBtn: "ACCESS SYNAPSYS",
             deepenTitleLabel: "DEEPEN STRATEGY",
             deepenTitle: "DEEPEN THE STRATEGY",
@@ -266,7 +267,8 @@ export const TRANSLATIONS = {
             boardExportBtn: "Exportar Report Board (PDF)",
             avgProfile: "Perfil_Médio_do_Portfólio",
             avgAlignment: "Alinhamento médio em todas as unidades",
-            average: "Média"
+            average: "Média",
+            newAnalysisBtn: "NOVA ANÁLISE"
         },
         nav: {
             home: "INÍCIO",
@@ -303,8 +305,8 @@ export const TRANSLATIONS = {
             authorBio: "Com mais de 18 anos de experiência global e +150 projetos de transformação entregues, Marcio Almeida é a autoridade por trás do algoritmo deste app. Criador dos frameworks RICE© e Synapsys, ele já desenvolveu mais de 18.000 líderes ao redor do mundo.",
             authorLinkedin: "Perfil LinkedIn",
             authorWebsite: "Site Oficial",
-            synapsysTitle: "SYNAPSYS AI",
-            synapsysDesc: "A inteligência avançada para ecossistemas de inovação. Conheça a suite completa.",
+            synapsysTitle: "SYNAPSYS",
+            synapsysDesc: "O ecossistema que ensina o usuário a se libertar e voltar a ser dono de seu pensamento e intelecto.",
             synapsysBtn: "ACESSAR SYNAPSYS",
             deepenTitleLabel: "ESTRATÉGIA AVANÇADA",
             deepenTitle: "APROFUNDE A ESTRATÉGIA",

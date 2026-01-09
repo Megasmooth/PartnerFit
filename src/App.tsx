@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import SplashScreen from "./components/SplashScreen.tsx";
 import IdentitySetup from './components/IdentitySetup';
 import Equalizer from './components/Equalizer';
@@ -162,56 +163,92 @@ function App() {
             </nav>
 
             {/* Main Content Area */}
-            <main className="relative z-10 w-full flex-1 flex flex-col items-center justify-center mt-4 mb-12">
-
-                {step === 'identity' && (
-                    <IdentitySetup
-                        corp={corp}
-                        startup={startup}
-                        setCorpName={(n) => setCorp({ ...corp, name: n })}
-                        setStartupName={(n) => setStartup({ ...startup, name: n })}
-                        onNext={handleNext}
-                        labels={t}
-                    />
-                )}
-
-                {step === 'calibration' && (
-                    <Equalizer
-                        corp={corp}
-                        startup={startup}
-                        setCorpValue={(id, val) => setCorp({ ...corp, values: { ...corp.values, [id]: val } })}
-                        setStartupValue={(id, val) => setStartup({ ...startup, values: { ...startup.values, [id]: val } })}
-                        onNext={handleNext}
-                        labels={t}
-                    />
-                )}
-
-                {step === 'diagnosis' && (
-                    <div className="w-full max-w-6xl flex flex-col md:flex-row gap-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
-                        <div className="flex-1 order-2 md:order-1">
-                            <GovernanceGenerator
-                                score={analysis.score}
-                                analysis={analysis.dimensionAnalysis}
-                                onRestart={handleRestart}
-                                corpName={corp.name}
+            <main className="relative z-10 w-full flex-1 flex flex-col items-center mt-4 mb-24 lg:mb-32">
+                <AnimatePresence mode="wait">
+                    {step === 'identity' && (
+                        <motion.div
+                            key="identity"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            transition={{ duration: 0.4 }}
+                            className="w-full flex justify-center"
+                        >
+                            <IdentitySetup
+                                corp={corp}
+                                startup={startup}
+                                setCorpName={(n) => setCorp({ ...corp, name: n })}
+                                setStartupName={(n) => setStartup({ ...startup, name: n })}
+                                onNext={handleNext}
                                 labels={t}
                             />
-                        </div>
-                        <div className="flex-1 order-1 md:order-2">
-                            <DiagnosisRadar corp={corp} startup={startup} labels={t} />
-                        </div>
-                    </div>
-                )}
+                        </motion.div>
+                    )}
 
-                {step === 'portfolio' && (
-                    <PortfolioScreen
-                        analyses={portfolio}
-                        lang={t}
-                        onView={loadAnalysis}
-                        onBack={() => setStep('identity')}
-                    />
-                )}
+                    {step === 'calibration' && (
+                        <motion.div
+                            key="calibration"
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.4 }}
+                            className="w-full flex justify-center"
+                        >
+                            <Equalizer
+                                corp={corp}
+                                startup={startup}
+                                setCorpValue={(id, val) => setCorp({ ...corp, values: { ...corp.values, [id]: val } })}
+                                setStartupValue={(id, val) => setStartup({ ...startup, values: { ...startup.values, [id]: val } })}
+                                onNext={handleNext}
+                                labels={t}
+                            />
+                        </motion.div>
+                    )}
 
+                    {step === 'diagnosis' && (
+                        <motion.div
+                            key="diagnosis"
+                            initial={{ opacity: 0, scale: 1.02 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.5 }}
+                            className="w-full flex justify-center"
+                        >
+                            <div className="w-full max-w-6xl flex flex-col md:flex-row gap-8">
+                                <div className="flex-1 order-2 md:order-1">
+                                    <GovernanceGenerator
+                                        score={analysis.score}
+                                        analysis={analysis.dimensionAnalysis}
+                                        onRestart={handleRestart}
+                                        corpName={corp.name}
+                                        labels={t}
+                                    />
+                                </div>
+                                <div className="flex-1 order-1 md:order-2">
+                                    <DiagnosisRadar corp={corp} startup={startup} labels={t} />
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {step === 'portfolio' && (
+                        <motion.div
+                            key="portfolio"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 1.05 }}
+                            transition={{ duration: 0.4 }}
+                            className="w-full flex justify-center"
+                        >
+                            <PortfolioScreen
+                                analyses={portfolio}
+                                lang={t}
+                                onBack={() => setStep('identity')}
+                                onView={loadAnalysis}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </main>
 
             {/* Knowledge Hub Drawer */}

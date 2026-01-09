@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Building2, Rocket } from 'lucide-react';
 import { ActorProfile, DIMENSIONS, DimensionConfig, EcosystemValues } from '../types';
 
 interface EqualizerProps {
@@ -39,7 +40,7 @@ const SliderTrack: React.FC<{
                     <h3 className="text-white font-bold text-lg md:text-xl flex items-center gap-2 tracking-wide">
                         {t.label}
                     </h3>
-                    <p className="text-gray-400 text-xs md:text-sm max-w-md">{t.description}</p>
+                    <p className="text-gray-300 text-sm md:text-base font-medium max-w-md leading-relaxed">{t.description}</p>
                 </div>
                 <div className="text-right">
                     {isCritical && (
@@ -100,8 +101,8 @@ const SliderTrack: React.FC<{
                         window.addEventListener('mouseup', handleMouseUp);
                     }}
                 >
-                    <span className="text-[10px] font-black text-vault-corp">C</span>
-                    <div className="absolute -bottom-8 opacity-0 group-hover/handle:opacity-100 transition-opacity bg-vault-corp text-black text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap z-50 pointer-events-none">
+                    <Building2 className="w-5 h-5 text-vault-corp" />
+                    <div className="absolute -bottom-8 opacity-0 group-hover/handle:opacity-100 transition-opacity bg-vault-corp text-black text-[10px] font-black px-3 py-1 rounded whitespace-nowrap z-50 pointer-events-none shadow-xl border border-white/20">
                         {t.corp}
                     </div>
                 </div>
@@ -128,8 +129,8 @@ const SliderTrack: React.FC<{
                         window.addEventListener('mouseup', handleMouseUp);
                     }}
                 >
-                    <span className="text-[10px] font-black text-vault-startup">S</span>
-                    <div className="absolute -top-8 opacity-0 group-hover/handle:opacity-100 transition-opacity bg-vault-startup text-black text-[10px] font-bold px-2 py-1 rounded whitespace-nowrap z-50 pointer-events-none">
+                    <Rocket className="w-5 h-5 text-vault-startup" />
+                    <div className="absolute -top-8 opacity-0 group-hover/handle:opacity-100 transition-opacity bg-vault-startup text-black text-[10px] font-black px-3 py-1 rounded whitespace-nowrap z-50 pointer-events-none shadow-xl border border-white/20">
                         {t.startup}
                     </div>
                 </div>

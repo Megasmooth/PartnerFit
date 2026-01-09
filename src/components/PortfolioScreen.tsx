@@ -1,8 +1,8 @@
 import React from 'react';
 import { SavedAnalysis } from '../utils/storage';
 import { TranslationKeys } from '../utils/i18n';
-import { ArrowLeft, Calendar, TrendingUp, BarChart3, Shield, Info, Download, Briefcase, Sparkles, FileText } from 'lucide-react';
-import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar } from 'recharts';
+import { ArrowLeft, Calendar, TrendingUp, BarChart3, Shield, Info, Download, Briefcase, Sparkles, FileText, Share2, Printer } from 'lucide-react';
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar, Legend } from 'recharts';
 import { DIMENSIONS } from '../types';
 
 interface PortfolioScreenProps {
@@ -53,6 +53,15 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                     <ArrowLeft className="w-6 h-6" />
                 </button>
                 <h2 className="text-body-highlight text-emerald-400">{p.title}</h2>
+                <div className="ml-auto">
+                    <button
+                        onClick={onBack}
+                        className="flex items-center gap-2 px-6 py-2.5 bg-white text-black font-black rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] text-xs uppercase tracking-widest"
+                    >
+                        <Sparkles className="w-4 h-4" />
+                        {p.newAnalysisBtn}
+                    </button>
+                </div>
             </div>
 
             <h3 className="text-3xl md:text-5xl font-black text-white mb-10 tracking-tighter uppercase flex items-center gap-4">
@@ -98,13 +107,35 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                         vs {item.startupName}
                                     </div>
                                     <div className="mt-4 flex items-center justify-between">
-                                        <div className="flex flex-col">
-                                            <span className="text-[8px] text-gray-600 font-black uppercase">{p.frictionScore}</span>
-                                            <span className="text-xl font-black text-white">{item.score}</span>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); onView(item); }}
+                                                className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                            >
+                                                <Info className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); window.print(); }}
+                                                className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                            >
+                                                <Printer className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); if (navigator.share) navigator.share({ title: 'PartnerFit Report', url: window.location.href }); }}
+                                                className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                            >
+                                                <Share2 className="w-3.5 h-3.5" />
+                                            </button>
                                         </div>
-                                        <button className="p-2 bg-white/5 rounded-lg group-hover:bg-emerald-500 group-hover:text-black transition-all">
-                                            <ArrowLeft className="w-4 h-4 rotate-180" />
-                                        </button>
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex flex-col text-right mr-2">
+                                                <span className="text-[8px] text-gray-600 font-black uppercase">{p.frictionScore}</span>
+                                                <span className="text-xl font-black text-white">{item.score}</span>
+                                            </div>
+                                            <button className="p-2 bg-white/5 rounded-lg group-hover:bg-emerald-500 group-hover:text-black transition-all">
+                                                <ArrowLeft className="w-4 h-4 rotate-180" />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -154,8 +185,9 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                                 dataKey="value"
                                                 stroke="#10b981"
                                                 fill="#10b981"
-                                                fillOpacity={0.2}
+                                                fillOpacity={0.6}
                                             />
+                                            <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: '20px', fontSize: '10px', fontWeight: 'bold' }} />
                                         </RadarChart>
                                     </ResponsiveContainer>
                                 </div>

@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-vault-bg text-vault-text font-sans antialiased overflow-hidden;
+    @apply bg-vault-bg text-vault-text font-sans antialiased overflow-y-auto;
   }
 }
 
