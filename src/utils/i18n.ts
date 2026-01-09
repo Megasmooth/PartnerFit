@@ -39,6 +39,12 @@ export const TRANSLATIONS = {
                     startup: "Licensed / Shared"
                 }
             },
+            levels: {
+                low: "Low",
+                medium: "Medium",
+                high: "High",
+                veryHigh: "Very High"
+            },
             nextBtn: "RUN DIAGNOSIS"
         },
         diagnosis: {
@@ -264,6 +270,12 @@ export const TRANSLATIONS = {
                     corp: "Exclusivo / Proprietário",
                     startup: "Licenciado / Compartilhado"
                 }
+            },
+            levels: {
+                low: "Baixo",
+                medium: "Médio",
+                high: "Alto",
+                veryHigh: "Muito Alto"
             },
             nextBtn: "EXECUTAR DIAGNÓSTICO"
         },

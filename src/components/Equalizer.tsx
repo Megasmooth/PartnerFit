@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building2, Rocket } from 'lucide-react';
+import { Building2, Rocket, Info } from 'lucide-react';
 import { ActorProfile, DIMENSIONS, DimensionConfig, EcosystemValues } from '../types';
 
 interface EqualizerProps {
@@ -13,7 +12,30 @@ interface EqualizerProps {
     labels: any;
 }
 
-const SliderTrack: React.FC<{
+const ScaleButton: React.FC<{
+    value: number;
+    isSelected: boolean;
+    onClick: () => void;
+    color: 'cyan' | 'emerald';
+}> = ({ value, isSelected, onClick, color }) => {
+    const colorClasses = color === 'cyan'
+        ? 'border-cyan-500 bg-cyan-500/20 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.4)]'
+        : 'border-emerald-500 bg-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.4)]';
+
+    const defaultClasses = 'border-white/10 bg-white/5 text-gray-500';
+
+    return (
+        <button
+            onClick={onClick}
+            className={`w-12 h-12 rounded-xl font-black text-sm transition-all duration-300 border-2 hover:scale-110 active:scale-95 ${isSelected ? colorClasses : defaultClasses
+                } hover:border-white/30`}
+        >
+            {value}
+        </button>
+    );
+};
+
+const DimensionRow: React.FC<{
     dim: DimensionConfig;
     corpVal: number;
     startVal: number;
@@ -21,145 +43,139 @@ const SliderTrack: React.FC<{
     setStartVal: (v: number) => void;
     labels: any;
 }> = ({ dim, corpVal, startVal, setCorpVal, setStartVal, labels }) => {
-    // Logic for the line tension
     const delta = Math.abs(corpVal - startVal);
-    const isCritical = delta > 6;
-    const isOptimal = delta <= 3;
-
-    // Look up translated texts
+    const isCritical = delta > 4;
+    const isOptimal = delta <= 2;
     const t = labels.calibration.dimensions[dim.id];
 
-    // Percentage positions (1-10 mapped to 0-100%)
-    const corpPct = ((corpVal - 1) / 9) * 100;
-    const startPct = ((startVal - 1) / 9) * 100;
+    const getQualitativeLabel = (val: number) => {
+        if (val <= 3) return labels.calibration.levels?.low || 'Low';
+        if (val <= 5) return labels.calibration.levels?.medium || 'Medium';
+        if (val <= 7) return labels.calibration.levels?.high || 'High';
+        return labels.calibration.levels?.veryHigh || 'Very High';
+    };
 
     return (
-        <div className="flex flex-col gap-4 mb-10 select-none animate-in slide-in-from-bottom-4 duration-500">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-2">
-                <div>
-                    <h3 className="text-white font-bold text-lg md:text-xl flex items-center gap-2 tracking-wide">
-                        {t.label}
-                    </h3>
-                    <p className="text-gray-300 text-sm md:text-base font-medium max-w-md leading-relaxed">{t.description}</p>
+        <div className="flex flex-col gap-8 mb-12 last:mb-0 p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-white/5 to-transparent hover:border-white/10 transition-all">
+            {/* Header */}
+            <div className="flex justify-between items-start">
+                <div className="space-y-2 flex-1">
+                    <div className="flex items-center gap-3">
+                        <div className={`w-1 h-8 rounded-full ${isCritical ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]' : isOptimal ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-white/20'}`} />
+                        <h3 className="text-white font-black text-2xl uppercase tracking-tighter">
+                            {t.label}
+                        </h3>
+                    </div>
+                    <p className="text-xs text-gray-500 font-bold uppercase tracking-widest max-w-2xl pl-4">
+                        {t.description}
+                    </p>
                 </div>
+
                 <div className="text-right">
-                    {isCritical && (
-                        <span className="flex items-center gap-2 text-vault-gap font-bold text-[10px] bg-red-500/10 px-3 py-1 rounded-full animate-pulse border border-red-500/20 tracking-widest uppercase">
-                            <span className="w-1.5 h-1.5 bg-red-500 rounded-full" /> {labels.diagnosis.critical}
-                        </span>
-                    )}
-                    {isOptimal && (
-                        <span className="flex items-center gap-2 text-vault-startup font-bold text-[10px] bg-green-500/10 px-3 py-1 rounded-full border border-green-500/20 tracking-widest uppercase">
-                            <span className="w-1.5 h-1.5 bg-green-500 rounded-full" /> {labels.diagnosis.optimal}
-                        </span>
-                    )}
+                    <div className="text-[9px] text-gray-600 font-black uppercase tracking-widest mb-1">Friction Index</div>
+                    <div className={`text-3xl font-black ${isCritical ? 'text-red-500' : isOptimal ? 'text-emerald-500' : 'text-white'} tracking-tighter`}>
+                        Δ {delta}
+                    </div>
                 </div>
             </div>
 
-            <div className="relative h-20 bg-black/40 rounded-xl border border-white/5 flex items-center px-8 shadow-inner group transition-colors hover:border-white/10">
-
-                {/* Background Track Markers */}
-                <div className="absolute inset-x-8 flex justify-between text-[9px] text-gray-700 font-mono pointer-events-none">
-                    <span>1</span><span>|</span><span>|</span><span>|</span><span>5</span><span>|</span><span>|</span><span>|</span><span>9</span><span>10</span>
+            {/* Corporate Selection */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                    <Building2 className="w-5 h-5 text-cyan-400" />
+                    <h4 className="text-cyan-400 font-black text-sm uppercase tracking-widest">
+                        {t.corp || 'Corporate'}
+                    </h4>
+                    <div className="text-xs text-gray-500 font-bold">
+                        → {getQualitativeLabel(corpVal)}
+                    </div>
                 </div>
+                <div className="flex gap-2">
+                    {Array.from({ length: 10 }, (_, i) => i + 1).map((val) => (
+                        <ScaleButton
+                            key={val}
+                            value={val}
+                            isSelected={corpVal === val}
+                            onClick={() => setCorpVal(val)}
+                            color="cyan"
+                        />
+                    ))}
+                </div>
+            </div>
 
-                {/* The Track Line */}
-                <div className="absolute left-8 right-8 h-1 bg-white/10 rounded-full"></div>
+            {/* Startup Selection */}
+            <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                    <Rocket className="w-5 h-5 text-emerald-400" />
+                    <h4 className="text-emerald-400 font-black text-sm uppercase tracking-widest">
+                        {t.startup || 'Startup'}
+                    </h4>
+                    <div className="text-xs text-gray-500 font-bold">
+                        → {getQualitativeLabel(startVal)}
+                    </div>
+                </div>
+                <div className="flex gap-2">
+                    {Array.from({ length: 10 }, (_, i) => i + 1).map((val) => (
+                        <ScaleButton
+                            key={val}
+                            value={val}
+                            isSelected={startVal === val}
+                            onClick={() => setStartVal(val)}
+                            color="emerald"
+                        />
+                    ))}
+                </div>
+            </div>
 
-                {/* Tension Line (Connecting the two points) */}
+            {/* Friction Indicator */}
+            {!isOptimal && (
                 <motion.div
-                    className={`absolute h-1 rounded-full z-10 opacity-60 ${isCritical ? 'bg-gradient-to-r from-red-500/50 via-red-500 to-red-500/50' : 'bg-white/30'} `}
-                    style={{
-                        left: `calc(${Math.min(corpPct, startPct)}% + 2rem)`, // 2rem = 32px (left padding 8 + offset?) NO, px-8 is 32px
-                        width: `calc(${Math.abs(corpPct - startPct)}%)`
-                    }}
-                    animate={isCritical ? {
-                        opacity: [0.4, 0.8, 0.4],
-                    } : {}}
-                    transition={{ duration: 2, repeat: Infinity }}
-                />
-
-                {/* Corp Handle (Blue) */}
-                <div
-                    className="absolute w-10 h-10 -ml-5 bg-vault-card border-2 border-vault-corp rounded-full shadow-[0_0_15px_rgba(0,255,255,0.2)] cursor-grab active:cursor-grabbing flex flex-col items-center justify-center z-20 hover:scale-110 active:scale-95 transition-all group/handle"
-                    style={{ left: `calc(${corpPct}% + 2rem)` }}
-                    onMouseDown={(e) => {
-                        const track = e.currentTarget.parentElement!;
-                        const handleMouseMove = (ev: MouseEvent) => {
-                            const rect = track.getBoundingClientRect();
-                            const x = ev.clientX - rect.left - 32; // 32px padding (px-8)
-                            const w = rect.width - 64; // total padding 64
-                            let val = Math.round((x / w) * 9) + 1;
-                            if (val < 1) val = 1; if (val > 10) val = 10;
-                            setCorpVal(val);
-                        };
-                        const handleMouseUp = () => {
-                            window.removeEventListener('mousemove', handleMouseMove);
-                            window.removeEventListener('mouseup', handleMouseUp);
-                        };
-                        window.addEventListener('mousemove', handleMouseMove);
-                        window.addEventListener('mouseup', handleMouseUp);
-                    }}
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`flex items-start gap-3 p-4 rounded-2xl border ${isCritical
+                            ? 'border-red-500/30 bg-red-500/5'
+                            : 'border-amber-500/30 bg-amber-500/5'
+                        }`}
                 >
-                    <Building2 className="w-5 h-5 text-vault-corp" />
-                    <div className="absolute -bottom-8 opacity-0 group-hover/handle:opacity-100 transition-opacity bg-vault-corp text-black text-[10px] font-black px-3 py-1 rounded whitespace-nowrap z-50 pointer-events-none shadow-xl border border-white/20">
-                        {t.corp}
+                    <Info className={`w-5 h-5 flex-shrink-0 mt-0.5 ${isCritical ? 'text-red-500' : 'text-amber-500'}`} />
+                    <div>
+                        <div className={`text-xs font-black uppercase tracking-widest mb-1 ${isCritical ? 'text-red-400' : 'text-amber-400'}`}>
+                            {isCritical ? 'Critical Friction Detected' : 'Moderate Friction'}
+                        </div>
+                        <p className="text-xs text-gray-400 leading-relaxed">
+                            {isCritical
+                                ? 'Significant misalignment may require governance mitigation strategies.'
+                                : 'Manageable gap - consider alignment during partnership structuring.'}
+                        </p>
                     </div>
-                </div>
-
-                {/* Startup Handle (Green) */}
-                <div
-                    className="absolute w-10 h-10 -ml-5 bg-vault-card border-2 border-vault-startup rounded-full shadow-[0_0_15px_rgba(34,197,94,0.2)] cursor-grab active:cursor-grabbing flex flex-col items-center justify-center z-30 hover:scale-110 active:scale-95 transition-all group/handle"
-                    style={{ left: `calc(${startPct}% + 2rem)` }}
-                    onMouseDown={(e) => {
-                        const track = e.currentTarget.parentElement!;
-                        const handleMouseMove = (ev: MouseEvent) => {
-                            const rect = track.getBoundingClientRect();
-                            const x = ev.clientX - rect.left - 32;
-                            const w = rect.width - 64;
-                            let val = Math.round((x / w) * 9) + 1;
-                            if (val < 1) val = 1; if (val > 10) val = 10;
-                            setStartVal(val);
-                        };
-                        const handleMouseUp = () => {
-                            window.removeEventListener('mousemove', handleMouseMove);
-                            window.removeEventListener('mouseup', handleMouseUp);
-                        };
-                        window.addEventListener('mousemove', handleMouseMove);
-                        window.addEventListener('mouseup', handleMouseUp);
-                    }}
-                >
-                    <Rocket className="w-5 h-5 text-vault-startup" />
-                    <div className="absolute -top-8 opacity-0 group-hover/handle:opacity-100 transition-opacity bg-vault-startup text-black text-[10px] font-black px-3 py-1 rounded whitespace-nowrap z-50 pointer-events-none shadow-xl border border-white/20">
-                        {t.startup}
-                    </div>
-                </div>
-
-            </div>
-
-            <div className="flex justify-between text-xs font-medium px-4">
-                <div className="text-vault-corp flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-vault-corp" /> {t.corp}: {corpVal}
-                </div>
-                <div className="text-vault-startup flex items-center gap-2">
-                    {t.startup}: {startVal} <div className="w-2 h-2 rounded-full bg-vault-startup" />
-                </div>
-            </div>
+                </motion.div>
+            )}
         </div>
     );
 };
 
 const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setStartupValue, onNext, labels }) => {
     return (
-        <div className="w-full max-w-4xl mx-auto p-4 pb-24">
-            <div className="mb-12 text-center">
-                <h2 className="text-heading-hero text-white mb-4 uppercase tracking-tighter">{labels.calibration.stepTitle}</h2>
-                <p className="text-body-standard max-w-xl mx-auto opacity-70 italic">{labels.calibration.instruction}</p>
+        <div className="w-full max-w-6xl mx-auto p-4 pb-24 animate-in fade-in duration-1000">
+            <div className="mb-16 text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-1 bg-white/5 rounded-full border border-white/10 mb-6 group">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] group-hover:text-white transition-colors">Strategic Assessment Matrix</span>
+                </div>
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-6 uppercase tracking-tighter leading-tight">
+                    {labels.calibration.stepTitle}
+                </h2>
+                <p className="text-gray-500 text-sm md:text-base font-medium max-w-3xl mx-auto leading-relaxed">
+                    {labels.calibration.instruction}
+                </p>
+                <p className="text-xs text-gray-600 font-bold uppercase tracking-widest mt-4">
+                    Select values from 1 (Low) to 10 (Very High) for each dimension
+                </p>
             </div>
 
-            <div className="glass-panel p-6 md:p-10 rounded-2xl relative">
+            <div className="space-y-6">
                 {DIMENSIONS.map(dim => (
-                    <SliderTrack
+                    <DimensionRow
                         key={dim.id}
                         dim={dim}
                         corpVal={corp.values[dim.id as keyof typeof corp.values]}
@@ -171,12 +187,16 @@ const Equalizer: React.FC<EqualizerProps> = ({ corp, startup, setCorpValue, setS
                 ))}
             </div>
 
-            <div className="text-center mt-12">
+            <div className="text-center mt-16">
                 <button
                     onClick={onNext}
-                    className="px-12 py-4 rounded-full bg-white text-black font-black tracking-widest text-sm md:text-base hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300"
+                    className="group relative inline-flex items-center gap-4 px-16 py-6 bg-white text-black font-black rounded-[2rem] hover:scale-105 transition-all duration-500 active:scale-95 shadow-[0_20px_50px_rgba(255,255,255,0.1)] overflow-hidden"
                 >
-                    {labels.calibration.nextBtn}
+                    <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="relative z-10 uppercase tracking-[0.3em] text-sm group-hover:text-white transition-colors">
+                        {labels.calibration.nextBtn}
+                    </span>
+                    <Rocket className="w-5 h-5 relative z-10 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform duration-500 group-hover:text-white" />
                 </button>
             </div>
         </div>

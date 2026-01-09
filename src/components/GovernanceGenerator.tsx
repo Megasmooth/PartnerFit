@@ -48,10 +48,14 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
     const handleShare = async () => {
         if (navigator.share) {
             try {
-                const summary = analysis.map((dim: any) => `${dim.label}: ${dim.delta}`).join(', ');
+                const summary = analysis.map((dim: any) => {
+                    const label = labels.calibration.dimensions[dim.id]?.label || dim.id;
+                    return `${label}: ${dim.delta}`;
+                }).join('\n');
+
                 await navigator.share({
                     title: 'PartnerFit Executive Report',
-                    text: `PartnerFit Diagnosis: ${score}/100 Synergy between ${corpName} and ${startupName}.\n\nDetailed Frictions: ${summary}\n\nAnalyze your partnership at:`,
+                    text: `PartnerFit Diagnosis: ${score}/100 Synergy between ${corpName} and ${startupName}.\n\nStrategic Frictions:\n${summary}\n\nExecute your strategy at:`,
                     url: 'https://partnerfit.ephata.solutions/',
                 });
             } catch (err) {

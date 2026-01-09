@@ -51,6 +51,7 @@ function App() {
     const [step, setStep] = useState<'identity' | 'calibration' | 'diagnosis' | 'portfolio'>('identity');
     const [portfolio, setPortfolio] = useState<SavedAnalysis[]>([]);
     const [isHubOpen, setIsHubOpen] = useState(false);
+    const [viewMode, setViewMode] = useState(false);
 
     const t = TRANSLATIONS[lang];
 
@@ -97,6 +98,7 @@ function App() {
 
     const handleRestart = () => {
         setStep('identity');
+        setViewMode(false);
         setCorp({ name: '', values: { speed: 5, risk: 5, cashflow: 5, ip: 5 } });
         setStartup({ name: '', values: { speed: 5, risk: 5, cashflow: 5, ip: 5 } });
     };
@@ -104,6 +106,7 @@ function App() {
     const loadAnalysis = (item: SavedAnalysis) => {
         setCorp({ name: item.corpName, values: item.corpValues });
         setStartup({ name: item.startupName, values: item.startupValues });
+        setViewMode(true);
         setStep('diagnosis');
     };
 
@@ -140,13 +143,6 @@ function App() {
                     </div>
 
                     <div className="hidden md:block h-8 border-l border-white/10" />
-
-                    <img
-                        src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
-                        alt="Ephata"
-                        className="h-10 filter grayscale-0 hover:scale-105 transition-all cursor-pointer no-print hidden sm:block"
-                        onClick={() => window.open('https://www.ephata.solutions/portfolio', '_blank')}
-                    />
                 </div>
 
                 <div className="flex items-center gap-1 md:gap-4">
@@ -290,12 +286,6 @@ function App() {
             {/* Footer */}
             <footer className="relative z-10 py-10 text-center transition-opacity mt-auto">
                 <div className="flex flex-col items-center gap-4">
-                    <img
-                        src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
-                        alt="Powered By Ephata"
-                        className="h-12 mx-auto filter grayscale-0 hover:scale-105 transition-all cursor-pointer"
-                        onClick={() => window.open('https://www.ephata.solutions/portfolio', '_blank')}
-                    />
                     <div className="flex flex-col gap-1">
                         <a
                             href="https://www.ephata.solutions/portfolio"

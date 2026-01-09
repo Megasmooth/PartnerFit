@@ -17,7 +17,7 @@ const DiagnosisRadar: React.FC<DiagnosisRadarProps> = ({ corp, startup, labels }
     }));
 
     return (
-        <div className="w-full h-[400px] glass-panel rounded-2xl p-4 flex flex-col items-center justify-center relative shadow-[0_0_30px_rgba(0,0,0,0.5)]">
+        <div className="diagnosis-radar-container w-full h-[400px] glass-panel rounded-2xl p-4 flex flex-col items-center justify-center relative shadow-[0_0_30px_rgba(0,0,0,0.5)]">
             <h3 className="absolute top-4 left-6 text-gray-500 font-mono text-xs tracking-widest">FRICTION_RADAR_V2.0</h3>
 
             <ResponsiveContainer width="100%" height="100%">
