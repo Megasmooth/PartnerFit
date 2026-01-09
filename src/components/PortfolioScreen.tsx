@@ -111,18 +111,55 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); onView(item); }}
                                                 className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                                title={lang.portfolio.viewBtn}
                                             >
                                                 <Info className="w-3.5 h-3.5" />
                                             </button>
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); window.print(); }}
                                                 className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                                title={lang.diagnosis.print}
                                             >
                                                 <Printer className="w-3.5 h-3.5" />
                                             </button>
                                             <button
-                                                onClick={(e) => { e.stopPropagation(); if (navigator.share) navigator.share({ title: 'PartnerFit Report', url: window.location.href }); }}
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    const headers = "Dimension,CorpValue,StartupValue,Delta,Status\n";
+                                                    const rows = DIMENSIONS.map(dim => {
+                                                        const corpVal = item.corpValues[dim.id] || 5;
+                                                        const startVal = item.startupValues[dim.id] || 5;
+                                                        const delta = Math.abs(corpVal - startVal);
+                                                        const status = delta <= 2 ? 'optimal' : delta <= 4 ? 'manageable' : 'critical';
+                                                        const label = lang.calibration.dimensions[dim.id].label;
+                                                        return `${label},${corpVal},${startVal},${delta},${status}`;
+                                                    }).join("\n");
+                                                    const csvContent = headers + rows;
+                                                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                                                    const link = document.createElement("a");
+                                                    const url = URL.createObjectURL(blob);
+                                                    link.setAttribute("href", url);
+                                                    link.setAttribute("download", `partnerfit_${item.corpName}_${item.startupName}.csv`);
+                                                    link.click();
+                                                }}
                                                 className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                                title={lang.diagnosis.exportCsv}
+                                            >
+                                                <Download className="w-3.5 h-3.5" />
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    if (navigator.share) {
+                                                        navigator.share({
+                                                            title: `PartnerFit: ${item.corpName} vs ${item.startupName}`,
+                                                            text: `Synergy Score: ${item.score}/100`,
+                                                            url: window.location.href
+                                                        });
+                                                    }
+                                                }}
+                                                className="p-1.5 bg-white/5 hover:bg-white/10 rounded-md transition-colors text-gray-400 hover:text-white"
+                                                title={lang.diagnosis.share}
                                             >
                                                 <Share2 className="w-3.5 h-3.5" />
                                             </button>
@@ -149,29 +186,104 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="glass-panel p-6 rounded-3xl border border-white/5 bg-gradient-to-br from-emerald-500/5 to-transparent">
                                 <div className="text-[10px] font-black text-emerald-500 tracking-[0.2em] uppercase mb-1">{p.avgScore}</div>
-                                <div className="text-5xl font-black text-white tracking-tighter">{avgScore}</div>
+                                <div className="text-4xl md:text-5xl font-black text-white tracking-tighter">{avgScore}</div>
                                 <div className="mt-2 w-full h-1 bg-white/5 rounded-full overflow-hidden">
                                     <div className="h-full bg-emerald-500" style={{ width: `${avgScore}%` }} />
                                 </div>
                             </div>
                             <div className="glass-panel p-6 rounded-3xl border border-white/5 bg-gradient-to-br from-cyan-500/5 to-transparent">
                                 <div className="text-[10px] font-black text-cyan-500 tracking-[0.2em] uppercase mb-1">{p.portfolioShield}</div>
-                                <div className="text-5xl font-black text-white tracking-tighter">{shieldPercent}%</div>
+                                <div className="text-4xl md:text-5xl font-black text-white tracking-tighter">{shieldPercent}%</div>
                                 <div className="mt-2 flex items-center gap-2 text-[10px] font-bold text-gray-500">
                                     <Shield className="w-3 h-3 text-cyan-400" /> {p.protectedAssets}
                                 </div>
                             </div>
                             <div className="glass-panel p-6 rounded-3xl border border-white/5 bg-gradient-to-br from-purple-500/5 to-transparent">
                                 <div className="text-[10px] font-black text-purple-500 tracking-[0.2em] uppercase mb-1">{p.maturityAvg}</div>
-                                <div className="text-5xl font-black text-white tracking-tighter">{maturityAvgVal}<span className="text-sm opacity-20">/10</span></div>
+                                <div className="text-4xl md:text-5xl font-black text-white tracking-tighter">{maturityAvgVal}<span className="text-sm opacity-20">/10</span></div>
                                 <div className="mt-2 flex items-center gap-2 text-[10px] font-bold text-gray-500 uppercase">
                                     <BarChart3 className="w-3 h-3 text-purple-400" /> {p.trlBenchmark}
                                 </div>
                             </div>
                         </div>
 
+                        {/* HIGH-LEVEL CONSULTING SCENARIOS */}
+                        {(() => {
+                            const scenarioKey = avgScore >= 80 ? 'optimal' : avgScore >= 50 ? 'manageable' : 'critical';
+                            const scenario = p.scenarios[scenarioKey];
+                            const scenarioColor = avgScore >= 80 ? 'text-emerald-400' : avgScore >= 50 ? 'text-amber-400' : 'text-red-400';
+                            const scenarioBg = avgScore >= 80 ? 'border-emerald-500/20 bg-emerald-500/5' : avgScore >= 50 ? 'border-amber-500/20 bg-amber-500/5' : 'border-red-500/20 bg-red-500/5';
+
+                            return (
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 animate-in fade-in zoom-in-95 duration-700">
+                                    {/* Executive Summary Card */}
+                                    <div className={`glass-panel p-8 rounded-3xl border ${scenarioBg} relative overflow-hidden group`}>
+                                        <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:bg-white/10 transition-colors" />
+                                        <div className="relative z-10">
+                                            <div className="flex items-center gap-3 mb-6">
+                                                <div className="p-2 bg-white/5 rounded-lg">
+                                                    <Sparkles className={`w-5 h-5 ${scenarioColor}`} />
+                                                </div>
+                                                <h4 className={`text-base md:text-lg font-black tracking-tighter uppercase ${scenarioColor}`}>{scenario.title}</h4>
+                                            </div>
+                                            <p className="text-sm md:text-base text-gray-300 leading-relaxed font-medium mb-8">
+                                                {scenario.desc}
+                                            </p>
+
+                                            {/* Signature & Methodology Note */}
+                                            <div className="pt-6 border-t border-white/10 mt-auto">
+                                                <div className="flex items-center gap-3 mb-4">
+                                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-black font-black text-xs">MA</div>
+                                                    <div>
+                                                        <div className="text-xs font-black text-white uppercase">{p.signature}</div>
+                                                        <div className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">{lang.knowledgeHub.authorRole}</div>
+                                                    </div>
+                                                </div>
+                                                <p className="text-[10px] text-gray-500 leading-tight italic opacity-60">
+                                                    {p.disclaimer}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Action Checklist Card */}
+                                    <div className="glass-panel p-8 rounded-3xl border border-white/10 bg-black/40">
+                                        <h4 className="text-sm font-black text-white mb-6 tracking-widest uppercase flex items-center gap-3">
+                                            <TrendingUp className="w-4 h-4 text-emerald-500" />
+                                            STRATEGIC_ACTION_CHECKLIST
+                                        </h4>
+                                        <div className="space-y-4">
+                                            {scenario.checklist.map((item: string, idx: number) => (
+                                                <div key={idx} className="flex items-start gap-4 group/item">
+                                                    <div className="mt-1 w-5 h-5 rounded-md border border-white/10 flex items-center justify-center shrink-0 group-hover/item:border-emerald-500/50 transition-colors bg-white/5">
+                                                        <span className="text-[10px] font-black text-emerald-500">{idx + 1}</span>
+                                                    </div>
+                                                    <p className="text-sm text-gray-400 font-medium group-hover/item:text-gray-200 transition-colors leading-snug">
+                                                        {item}
+                                                    </p>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Consulting CTA */}
+                                        <div className="mt-10 pt-8 border-t border-white/10">
+                                            <p className="text-xs text-gray-500 mb-4 font-bold uppercase tracking-widest">{p.consultingCTA}</p>
+                                            <a
+                                                href={lang.knowledgeHub.whatsappUrl}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                className="w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-black rounded-xl text-center block transition-all hover:scale-[1.02] shadow-[0_20px_40px_rgba(16,185,129,0.2)] text-xs uppercase tracking-widest"
+                                            >
+                                                {lang.knowledgeHub.whatsappBtn}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })()}
+
                         {/* Charts Row */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             {/* Portfolio Radar */}
                             <div className="glass-panel p-8 rounded-3xl border border-white/5 relative flex flex-col items-center">
                                 <div className="absolute top-6 left-8 text-[10px] font-black text-gray-600 tracking-[0.3em] uppercase">{p.avgProfile}</div>
@@ -190,11 +302,6 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                             <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: '20px', fontSize: '10px', fontWeight: 'bold' }} />
                                         </RadarChart>
                                     </ResponsiveContainer>
-                                </div>
-                                <div className="mt-4 text-center">
-                                    <div className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest flex items-center justify-center gap-2">
-                                        <Info className="w-3 h-3" /> {p.avgAlignment}
-                                    </div>
                                 </div>
                             </div>
 
@@ -226,7 +333,7 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                         </div>
 
                         {/* Board Summary Card */}
-                        <div className="glass-panel p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-r from-amber-500/5 to-transparent relative overflow-hidden group border-2">
+                        <div className="glass-panel p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-r from-amber-500/5 to-transparent relative overflow-hidden group border-2 no-print">
                             <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform">
                                 <FileText className="w-48 h-48 text-amber-500" />
                             </div>

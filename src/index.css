@@ -43,18 +43,107 @@
     text-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
   }
 
-  /* Print Styles for PDF Export */
+  /* Professional Print Styles for PDF Export */
   @media print {
-    .no-print {
-      display: none !important;
+    @page {
+      margin: 2cm;
+      size: auto;
     }
 
     body {
       background: white !important;
       color: black !important;
+      padding: 0 !important;
       overflow: visible !important;
+      height: auto !important;
     }
 
+    #root {
+      background: white !important;
+      color: black !important;
+    }
+
+    /* Force Light Theme on Containers */
+    .glass-panel,
+    .bg-\[#0a0a0c\],
+    .bg-black\/40,
+    .bg-vault-bg {
+      background: white !important;
+      color: black !important;
+      border: 1px solid #eee !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+
+    /* Force Text Legibility */
+    .text-white,
+    .text-gray-300,
+    .text-gray-400,
+    .text-gray-500,
+    .text-emerald-500\/60,
+    .text-gray-600 {
+      color: #222 !important;
+    }
+
+    .text-emerald-500,
+    .text-emerald-400 {
+      color: #047857 !important;
+    }
+
+    .text-cyan-500,
+    .text-cyan-400 {
+      color: #0e7490 !important;
+    }
+
+    .text-amber-500,
+    .text-amber-400 {
+      color: #b45309 !important;
+    }
+
+    .text-purple-500,
+    .text-purple-400 {
+      color: #7e22ce !important;
+    }
+
+    /* Hide UI noise */
+    .no-print,
+    button:not(.print-visible),
+    .tooltip,
+    .custom-scrollbar::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    /* Grids & Layout for Paper */
+    .grid {
+      display: block !important;
+    }
+
+    .xl\:col-span-8,
+    .xl\:col-span-4,
+    .md\:grid-cols-2,
+    .md\:grid-cols-3 {
+      width: 100% !important;
+      margin-bottom: 2rem !important;
+      display: block !important;
+    }
+
+    /* Radar Chart Contrast */
+    .recharts-polar-grid-concentric-path,
+    .recharts-polar-grid-angle-line {
+      stroke: #ccc !important;
+    }
+
+    .recharts-text {
+      fill: #333 !important;
+      font-weight: bold !important;
+    }
+
+    /* Ensure Logo is visible but not inverted */
+    img {
+      filter: none !important;
+    }
+
+    /* Force page breaks */
     .print-break-before {
       page-break-before: always;
     }

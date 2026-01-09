@@ -123,19 +123,30 @@ function App() {
 
             {/* Navbar */}
             <nav className="relative z-50 w-full max-w-7xl flex justify-between items-center py-4 mb-4 border-b border-white/5 no-print">
-                <div
-                    onClick={handleRestart}
-                    className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
-                >
-                    <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20">
-                        <Zap className="w-4 h-4 text-emerald-400" />
+                <div className="flex items-center gap-4 md:gap-8">
+                    <div
+                        onClick={handleRestart}
+                        className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                    >
+                        <div className="w-8 h-8 bg-emerald-500/10 rounded-lg flex items-center justify-center border border-emerald-500/20">
+                            <Zap className="w-4 h-4 text-emerald-400" />
+                        </div>
+                        <div>
+                            <h1 className="text-lg font-black tracking-tighter leading-none">
+                                PARTNER<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">FIT</span>
+                            </h1>
+                            <p className="text-[9px] tracking-[0.2em] text-gray-500">{t.tagline}</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 className="text-lg font-black tracking-tighter leading-none">
-                            PARTNER<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">FIT</span>
-                        </h1>
-                        <p className="text-[9px] tracking-[0.2em] text-gray-500">{t.tagline}</p>
-                    </div>
+
+                    <div className="hidden md:block h-8 border-l border-white/10" />
+
+                    <img
+                        src="https://static.wixstatic.com/media/aefc44_1e97a663b3614d8483e3e17a332685f9~mv2.png"
+                        alt="Ephata"
+                        className="h-8 filter grayscale hover:grayscale-0 transition-all cursor-pointer no-print hidden sm:block"
+                        onClick={() => window.open('https://ephata.solutions', '_blank')}
+                    />
                 </div>
 
                 <div className="flex items-center gap-1 md:gap-4">
@@ -280,7 +291,7 @@ function App() {
                 <img
                     src="https://static.wixstatic.com/media/aefc44_1e97a663b3614d8483e3e17a332685f9~mv2.png"
                     alt="Powered By Ephata"
-                    className="h-4 mx-auto mb-2 filter grayscale hover:grayscale-0 transition-all"
+                    className="h-8 mx-auto mb-2 filter grayscale hover:grayscale-0 transition-all"
                 />
             </footer>
         </div>

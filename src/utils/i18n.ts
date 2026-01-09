@@ -107,7 +107,42 @@ export const TRANSLATIONS = {
             avgProfile: "Portfolio_Average_Profile",
             avgAlignment: "Average Alignment across all units",
             average: "Average",
-            newAnalysisBtn: "NEW ANALYSIS"
+            newAnalysisBtn: "NEW ANALYSIS",
+            scenarios: {
+                optimal: {
+                    title: "STRATEGIC SOVEREIGNTY",
+                    desc: "Your portfolio indicators suggest a mature and aligned collaboration ecosystem. The high synergy score reflects a rare state of operational harmony. Focus on institutionalizing this governance and protecting intellectual property to maintain this competitive edge.",
+                    checklist: [
+                        "Institutionalize the current governance model into a 'Global Playbook'.",
+                        "Acquire additional IP blocks to consolidate market sovereignty.",
+                        "Implement a tiered mentorship program from Corporate leaders to Startup founders.",
+                        "Review exit and liquidity clauses to reflect the high-value synergy."
+                    ]
+                },
+                manageable: {
+                    title: "TACTICAL ALIGNMENT IN PROGRESS",
+                    desc: "Significant synergy is present, but structural friction points remain. This stage requires active tactical governance to prevent cultural or operational 'drift'. Bridging the decision-making gap is your immediate priority.",
+                    checklist: [
+                        "Establish a 'Fast-Track' decision committee with autonomy for sub-budgets.",
+                        "Conduct a 'Cultural Sync' workshop between middle management and founders.",
+                        "Standardize 30-day payment terms specifically for the innovation ecosystem.",
+                        "Define clear milestones for technical and commercial validation (H1-H2)."
+                    ]
+                },
+                critical: {
+                    title: "STRATEGIC RESCUE REQUIRED",
+                    desc: "High friction zones detected. The indicators point to a systemic mismatch in speed, risk appetite, or governance structures. Without immediate surgical intervention, the risk of partnership collapse and capital loss is extremely high.",
+                    checklist: [
+                        "Execute an emergency 'Governance Reset' session with C-Level stakeholders.",
+                        "Implement a stop-loss clause for projects with negative cash flow loops.",
+                        "Congelar expansão burocrática até que um lead dedicado seja atribuído.",
+                        "Migrate IP control to a shared sandboxed environment immediately."
+                    ]
+                }
+            },
+            signature: "Marcio Almeida",
+            disclaimer: "Methodology based on 150+ real cases and proprietary frameworks. Note: Algorithmic results are predictive and may contain variations depending on execution context.",
+            consultingCTA: "Ready to elevate these results? Speak with Marcio Almeida to adjust your strategic initiatives."
         },
         nav: {
             home: "HOME",
@@ -137,6 +172,10 @@ export const TRANSLATIONS = {
                 {
                     q: "Why was a specific service recommended?",
                     a: "The system crosses your Friction Deltas with specific legal and strategic frameworks. If you have high IP friction, GAE® is recommended. If cultural shock is detected, ETCD® is the path."
+                },
+                {
+                    q: "Is the algorithm based on real-world data?",
+                    a: "Yes. The engine is powered by a database of 150+ global corporate/startup partnership cases. It uses Marcio Almeida's proprietary methodology to weight frictions and predict success probabilities. However, as a predictive tool, it should be used as a strategic guide, not an absolute certainty."
                 }
             ],
             authorTitle: "ARCHITECTED BY",
@@ -268,7 +307,42 @@ export const TRANSLATIONS = {
             avgProfile: "Perfil_Médio_do_Portfólio",
             avgAlignment: "Alinhamento médio em todas as unidades",
             average: "Média",
-            newAnalysisBtn: "NOVA ANÁLISE"
+            newAnalysisBtn: "NOVA ANÁLISE",
+            scenarios: {
+                optimal: {
+                    title: "SOBERANIA ESTRATÉGICA",
+                    desc: "Seus indicadores sugerem um ecossistema de colaboração maduro e alinhado. O alto score reflete um estado raro de harmonia operacional. Foque em institucionalizar esta governança e proteger a propriedade intelectual para manter esta vantagem competitiva.",
+                    checklist: [
+                        "Institucionalizar o modelo de governança atual em um 'Playbook Global'.",
+                        "Adquirir blocos adicionais de PI para consolidar a soberania de mercado.",
+                        "Implementar programa de mentoria multinível (C-Level para Founders).",
+                        "Revisar cláusulas de saída e liquidez para refletir a sinergia de alto valor."
+                    ]
+                },
+                manageable: {
+                    title: "ALINHAMENTO TÁTICO EM PROGRESSO",
+                    desc: "Existe uma sinergia significativa, mas pontos de atrito estrutural permanecem. Esta fase exige governança tática ativa para evitar o 'drift' cultural ou operacional. Reduzir o gap na tomada de decisão é sua prioridade imediata.",
+                    checklist: [
+                        "Estabelecer comitê de decisão 'Fast-Track' com autonomia orçamentária.",
+                        "Realizar workshop de 'Sync Cultural' entre média gerência e founders.",
+                        "Padronizar pagamentos em D+30 especificamente para o ecossistema de inovação.",
+                        "Definir marcos claros de validação técnica e comercial (H1-H2)."
+                    ]
+                },
+                critical: {
+                    title: "RESGATE ESTRATÉGICO NECESSÁRIO",
+                    desc: "Zonas de alto atrito detectadas. Os indicadores apontam para um desalinhamento sistêmico em velocidade, apetite ao risco ou governança. Sem intervenção cirúrgica imediata, o risco de colapso da parceria e perda de capital é extremo.",
+                    checklist: [
+                        "Executar sessão de emergência 'Governance Reset' com stakeholders C-Level.",
+                        "Implementar cláusula stop-loss para projetos com loops de caixa negativos.",
+                        "Congelar expansão burocrática até que um lead dedicado seja atribuído.",
+                        "Migrar o controle de PI para um ambiente 'sandboxed' compartilhado imediatamente."
+                    ]
+                }
+            },
+            signature: "Marcio Almeida",
+            disclaimer: "Metodologia baseada em mais de 150 cases reais e frameworks proprietários. Nota: Resultados algorítmicos são preditivos e podem conter variações dependendo do contexto de execução.",
+            consultingCTA: "Pronto para elevar esses resultados? Fale com Marcio Almeida para ajustar suas iniciativas estratégicas."
         },
         nav: {
             home: "INÍCIO",
@@ -298,6 +372,10 @@ export const TRANSLATIONS = {
                 {
                     q: "Por que um serviço específico foi recomendado?",
                     a: "O sistema cruza seus Deltas de Atrito com frameworks jurídicos e estratégicos específicos. Se você possui alto atrito de PI, o GAE® é recomendado. Se o choque cultural for detectado, o ETCD® é o caminho."
+                },
+                {
+                    q: "O algoritmo é baseado em dados reais?",
+                    a: "Sim. O motor é alimentado por uma base de dados de mais de 150 casos reais de parcerias entre corporações e startups globais. Ele utiliza a metodologia proprietária de Marcio Almeida para ponderar atritos e prever probabilidades de sucesso. Como ferramenta preditiva, deve ser usada como guia estratégico, não como verdade absoluta."
                 }
             ],
             authorTitle: "ARQUITETADO POR",
