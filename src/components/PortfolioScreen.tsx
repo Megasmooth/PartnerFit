@@ -57,7 +57,7 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                 await navigator.share({
                     title: p.shareVault,
                     text: `${p.avgScore}: ${avgScore}/100. ${p.avgAlignment}`,
-                    url: window.location.href,
+                    url: 'https://partnerfit.ephata.solutions/',
                 });
             } catch (err) {
                 console.error('Share failed', err);
@@ -125,10 +125,28 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                 </div>
             </div>
 
-            <h3 className="text-3xl md:text-5xl font-black text-white mb-10 tracking-tighter uppercase flex items-center gap-4">
-                <Briefcase className="w-8 h-8 md:w-12 md:h-12 text-emerald-500" />
-                {p.vaultCentral}
-            </h3>
+            <div className="flex flex-col items-center mb-10 text-center">
+                <img
+                    src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
+                    className="h-20 mb-4 cursor-pointer hover:scale-105 transition-all"
+                    alt="Ephata Solutions"
+                    onClick={() => window.open('https://www.ephata.solutions/portfolio', '_blank')}
+                />
+                <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase flex items-center justify-center gap-4">
+                    <Briefcase className="w-8 h-8 md:w-12 md:h-12 text-emerald-500" />
+                    {p.vaultCentral}
+                </h3>
+                <div className="mt-2">
+                    <a
+                        href="https://www.ephata.solutions/portfolio"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors"
+                    >
+                        Visit Our Portfolio
+                    </a>
+                </div>
+            </div>
 
             {analyses.length === 0 ? (
                 <div className="glass-panel p-20 text-center rounded-3xl border border-white/5">

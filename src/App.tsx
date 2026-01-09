@@ -142,10 +142,10 @@ function App() {
                     <div className="hidden md:block h-8 border-l border-white/10" />
 
                     <img
-                        src="https://static.wixstatic.com/media/aefc44_1e97a663b3614d8483e3e17a332685f9~mv2.png"
+                        src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
                         alt="Ephata"
-                        className="h-8 filter grayscale hover:grayscale-0 transition-all cursor-pointer no-print hidden sm:block"
-                        onClick={() => window.open('https://ephata.solutions', '_blank')}
+                        className="h-10 filter grayscale-0 hover:scale-105 transition-all cursor-pointer no-print hidden sm:block"
+                        onClick={() => window.open('https://www.ephata.solutions/portfolio', '_blank')}
                     />
                 </div>
 
@@ -287,12 +287,28 @@ function App() {
             <ScrollToTop labels={t} />
 
             {/* Footer */}
-            <footer className="relative z-10 py-6 text-center opacity-40 hover:opacity-100 transition-opacity mt-auto no-print">
-                <img
-                    src="https://static.wixstatic.com/media/aefc44_1e97a663b3614d8483e3e17a332685f9~mv2.png"
-                    alt="Powered By Ephata"
-                    className="h-8 mx-auto mb-2 filter grayscale hover:grayscale-0 transition-all"
-                />
+            <footer className="relative z-10 py-10 text-center transition-opacity mt-auto">
+                <div className="flex flex-col items-center gap-4">
+                    <img
+                        src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
+                        alt="Powered By Ephata"
+                        className="h-12 mx-auto filter grayscale-0 hover:scale-105 transition-all cursor-pointer"
+                        onClick={() => window.open('https://www.ephata.solutions/portfolio', '_blank')}
+                    />
+                    <div className="flex flex-col gap-1">
+                        <a
+                            href="https://www.ephata.solutions/portfolio"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors"
+                        >
+                            Visit Our Portfolio
+                        </a>
+                        <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest opacity-40">
+                            © 2025 Cristaliza ROI Calculator. Powered by <i className="text-gray-400">Ephata Solutions.</i>
+                        </p>
+                    </div>
+                </div>
             </footer>
         </div>
     );
