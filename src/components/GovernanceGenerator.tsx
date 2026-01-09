@@ -23,7 +23,7 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
 
     // Stable Quote for PDF and UI
     const randomQuote = useMemo(() => {
-        const quotes = labels.portfolio.marcioQuotes[scenarioKey];
+        const quotes = labels.knowledgeHub.marcioQuotes[scenarioKey];
         return quotes[Math.floor(Math.random() * quotes.length)];
     }, [scenarioKey, labels]);
 
@@ -48,9 +48,10 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
     const handleShare = async () => {
         if (navigator.share) {
             try {
+                const summary = analysis.map((dim: any) => `${dim.label}: ${dim.delta}`).join(', ');
                 await navigator.share({
-                    title: 'PartnerFit Score',
-                    text: `We calculated a Synergy Score of ${score}/100 between ${corpName} and our startup.`,
+                    title: 'PartnerFit Executive Report',
+                    text: `PartnerFit Diagnosis: ${score}/100 Synergy between ${corpName} and ${startupName}.\n\nDetailed Frictions: ${summary}\n\nAnalyze your partnership at:`,
                     url: 'https://partnerfit.ephata.solutions/',
                 });
             } catch (err) {
@@ -113,18 +114,6 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
 
     return (
         <div className="w-full max-w-5xl mx-auto pb-24">
-            {/* Header for PDF/Print */}
-            <div className="hidden print:flex flex-col items-center mb-10 text-center">
-                <img
-                    src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
-                    className="h-20 mb-4"
-                    alt="Ephata Solutions"
-                />
-                <div className="mt-2 text-emerald-600 font-black text-xs uppercase tracking-widest">
-                    https://www.ephata.solutions/portfolio
-                </div>
-            </div>
-
             {/* Header Result */}
             <div className="glass-panel p-8 rounded-3xl mb-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-white/5 bg-gradient-to-br from-emerald-500/5 to-transparent relative overflow-hidden group">
                 <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:bg-white/10 transition-colors" />

@@ -126,38 +126,30 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                 </div>
             </div>
 
-            <div className="flex flex-col items-center mb-10 text-center">
-                <img
-                    src="https://static.wixstatic.com/media/aefc44_d98369ad2d4944d6b498ba21e2bcc504~mv2.png"
-                    className="h-20 mb-4 cursor-pointer hover:scale-105 transition-all"
-                    alt="Ephata Solutions"
-                    onClick={() => window.open('https://www.ephata.solutions/portfolio', '_blank')}
-                />
-                <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase flex items-center justify-center gap-4">
-                    <Briefcase className="w-8 h-8 md:w-12 md:h-12 text-emerald-500" />
-                    {p.vaultCentral}
-                </h3>
-                <div className="mt-2">
-                    <a
-                        href="https://www.ephata.solutions/portfolio"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors"
-                    >
-                        Visit Our Portfolio
-                    </a>
-                </div>
+            <h3 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase flex items-center justify-center gap-4 mt-8">
+                <Briefcase className="w-8 h-8 md:w-12 md:h-12 text-emerald-500" />
+                {p.vaultCentral}
+            </h3>
+            <div className="mt-2 text-center">
+                <a
+                    href="https://www.ephata.solutions/portfolio"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-[10px] font-black text-emerald-500 uppercase tracking-[0.3em] hover:text-emerald-400 transition-colors"
+                >
+                    Visit Our Portfolio
+                </a>
             </div>
 
             {analyses.length === 0 ? (
-                <div className="glass-panel p-20 text-center rounded-3xl border border-white/5">
+                <div className="glass-panel p-20 text-center rounded-3xl border border-white/5 mt-10">
                     <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6">
                         <TrendingUp className="w-10 h-10 text-gray-700" />
                     </div>
                     <p className="text-gray-500 font-bold uppercase tracking-widest">{p.emptyState}</p>
                 </div>
             ) : (
-                <div className="space-y-12">
+                <div className="space-y-12 mt-10">
                     {/* 1. AGGREGATE SUMMARY CARDS (Top) */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="glass-panel p-8 rounded-3xl border border-white/5 bg-gradient-to-br from-emerald-500/10 to-transparent border-emerald-500/20">
@@ -375,64 +367,67 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                         </div>
                     </div>
                 </div>
-            )}
+            )
+            }
 
             {/* Lead Collection Modal */}
-            {showEmailModal && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md no-print">
-                    <div className="bg-[#1a1a1a] p-8 rounded-[2rem] w-full max-w-md border border-white/10 shadow-2xl relative animate-in fade-in zoom-in-95 duration-300">
-                        <button
-                            onClick={() => setShowEmailModal(false)}
-                            className="absolute top-6 right-6 p-2 text-gray-500 hover:text-white transition-colors"
-                        >
-                            <X className="w-5 h-5" />
-                        </button>
+            {
+                showEmailModal && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md no-print">
+                        <div className="bg-[#1a1a1a] p-8 rounded-[2rem] w-full max-w-md border border-white/10 shadow-2xl relative animate-in fade-in zoom-in-95 duration-300">
+                            <button
+                                onClick={() => setShowEmailModal(false)}
+                                className="absolute top-6 right-6 p-2 text-gray-500 hover:text-white transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
 
-                        <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">{lang.diagnosis.exportCsv}</h3>
-                        <p className="text-gray-400 text-xs mb-8 font-medium leading-relaxed">{lang.diagnosis.modalDesc}</p>
+                            <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">{lang.diagnosis.exportCsv}</h3>
+                            <p className="text-gray-400 text-xs mb-8 font-medium leading-relaxed">{lang.diagnosis.modalDesc}</p>
 
-                        <div className="space-y-6">
-                            <div>
-                                <label className="block text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2">{lang.diagnosis.modalPlaceholder}</label>
-                                <input
-                                    type="email"
-                                    placeholder="exemplo@empresa.com"
-                                    value={email}
-                                    onChange={e => setEmail(e.target.value)}
-                                    className="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-white focus:border-emerald-500 outline-none transition-all font-medium"
-                                />
-                            </div>
-
-                            <label className="flex items-start gap-4 cursor-pointer group">
-                                <div className="mt-1 relative">
+                            <div className="space-y-6">
+                                <div>
+                                    <label className="block text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-2">{lang.diagnosis.modalPlaceholder}</label>
                                     <input
-                                        type="checkbox"
-                                        checked={lgpdConsent}
-                                        onChange={e => setLgpdConsent(e.target.checked)}
-                                        className="peer sr-only"
+                                        type="email"
+                                        placeholder="exemplo@empresa.com"
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        className="w-full bg-black/50 border border-white/10 p-4 rounded-xl text-white focus:border-emerald-500 outline-none transition-all font-medium"
                                     />
-                                    <div className="w-5 h-5 border border-white/20 rounded-md bg-white/5 transition-all peer-checked:bg-emerald-500 peer-checked:border-emerald-500" />
-                                    <X className="absolute inset-0 w-5 h-5 p-1 text-black scale-0 peer-checked:scale-100 transition-transform" />
                                 </div>
-                                <span className="text-[10px] text-gray-500 group-hover:text-gray-400 transition-colors leading-relaxed font-bold uppercase">
-                                    {lang.diagnosis.modalConsent}
-                                </span>
-                            </label>
 
-                            <div className="flex gap-4 pt-4">
-                                <button
-                                    onClick={handleExportPortfolioCSV}
-                                    disabled={!email || !lgpdConsent || isSubmitting}
-                                    className="flex-1 py-5 bg-white text-black font-black rounded-2xl hover:bg-emerald-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs uppercase tracking-widest shadow-xl"
-                                >
-                                    {isSubmitting ? lang.diagnosis.sending : lang.diagnosis.download}
-                                </button>
+                                <label className="flex items-start gap-4 cursor-pointer group">
+                                    <div className="mt-1 relative">
+                                        <input
+                                            type="checkbox"
+                                            checked={lgpdConsent}
+                                            onChange={e => setLgpdConsent(e.target.checked)}
+                                            className="peer sr-only"
+                                        />
+                                        <div className="w-5 h-5 border border-white/20 rounded-md bg-white/5 transition-all peer-checked:bg-emerald-500 peer-checked:border-emerald-500" />
+                                        <X className="absolute inset-0 w-5 h-5 p-1 text-black scale-0 peer-checked:scale-100 transition-transform" />
+                                    </div>
+                                    <span className="text-[10px] text-gray-500 group-hover:text-gray-400 transition-colors leading-relaxed font-bold uppercase">
+                                        {lang.diagnosis.modalConsent}
+                                    </span>
+                                </label>
+
+                                <div className="flex gap-4 pt-4">
+                                    <button
+                                        onClick={handleExportPortfolioCSV}
+                                        disabled={!email || !lgpdConsent || isSubmitting}
+                                        className="flex-1 py-5 bg-white text-black font-black rounded-2xl hover:bg-emerald-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs uppercase tracking-widest shadow-xl"
+                                    >
+                                        {isSubmitting ? lang.diagnosis.sending : lang.diagnosis.download}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 
