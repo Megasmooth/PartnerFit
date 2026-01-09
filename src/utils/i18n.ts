@@ -108,6 +108,9 @@ export const TRANSLATIONS = {
             avgAlignment: "Average Alignment across all units",
             average: "Average",
             newAnalysisBtn: "NEW ANALYSIS",
+            strategicActionChecklist: "STRATEGIC ACTION CHECKLIST",
+            shareVault: "Share Portfolio Vault",
+            downloadCsv: "Download Portfolio CSV",
             scenarios: {
                 optimal: {
                     title: "STRATEGIC SOVEREIGNTY",
@@ -162,12 +165,12 @@ export const TRANSLATIONS = {
             faqTitle: "ALGORITHM DETAILS",
             faq: [
                 {
-                    q: "How does the algorithm calculate the alignment score?",
-                    a: "PartnerFit uses a 'Weighted Scoring' system calibrated by Ephata's average market intelligence. Based on 150+ global projects, we establish ideal benchmarks. Penalties are applied to friction zones that statistically lead to partnership failure."
+                    q: "What does the Synergy Score mean?",
+                    a: "It's a weighted calculation of 4 critical vectors: IP Protection, Decision Speed, Cash Flow Pressure, and Risk Appetite. Above 80 is Optimal; below 50 requires urgent intervention."
                 },
                 {
-                    q: "What defines the score of each axis?",
-                    a: "1. Speed: Decision cycles vs Execution loops. 2. Risk: Failure tolerance and safety nets. 3. Cash Flow: Payment terms and financial health alignment. 4. IP: Control vs Open Innovation flexibility."
+                    q: "Who is the algorithm's author?",
+                    a: "Marcio Almeida, a philosopher and global consultant with 18+ years of experience in GAE (Global Accountability Engines) and corporate-startup governance."
                 },
                 {
                     q: "Why was a specific service recommended?",
@@ -178,6 +181,29 @@ export const TRANSLATIONS = {
                     a: "Yes. The engine is powered by a database of 150+ global corporate/startup partnership cases. It uses Marcio Almeida's proprietary methodology to weight frictions and predict success probabilities. However, as a predictive tool, it should be used as a strategic guide, not an absolute certainty."
                 }
             ],
+            marcioQuotes: {
+                critical: [
+                    "Governance is not an accessory; it is the axis upon which the integrity of the partnership rests. Without it, risk ceases to be calculated and becomes negligence.",
+                    "In eighteen years of global consulting, I've learned that tactical misalignment in critical zones is the silent prelude to capital erosion.",
+                    "Restoring order to an ecosystem in crisis requires more than speed; it requires the rigor of someone who understands the structure of the problem.",
+                    "Intellectual sovereignty does not allow for amateurism in friction management. What we ignore today will charge us with interest tomorrow.",
+                    "A legacy is not built on unstable foundations. We must anchor this partnership in non-negotiable governance fundamentals."
+                ],
+                manageable: [
+                    "Synergy is latent, but effectiveness lies in the surgical precision of execution. Detail is not small when seeking sovereignty.",
+                    "Where there is friction, there is opportunity for refinement. Adjusting the caliber now is what separates an ordinary project from high-impact delivery.",
+                    "The difference between a mediocre partnership and an extraordinary one is the governance that protects error margins.",
+                    "Balancing distinct vectors requires a holistic view that only systemic experience provides. Let's polish these edges.",
+                    "Progress is visible, but the protection of intellectual assets requires a tactical vigilance we have yet to reach."
+                ],
+                optimal: [
+                    "Market sovereignty is the fruit of a governance that anticipates the future by protecting the assets of the present.",
+                    "When vectors align with this precision, the leader's role is to institutionalize harmony so that it becomes perennial.",
+                    "Full synergy is a rare asset. Protecting it with robust governance structures is the next step for global scale.",
+                    "Reaching the optimal zone is a merit; staying in it is an intellectual and strategic discipline.",
+                    "Success here is not luck; it is the reflection of well-calibrated choices. Now, let's transform this strength into market hegemony."
+                ]
+            },
             authorTitle: "ARCHITECTED BY",
             authorRole: "CIO & Founder Ephata Solutions",
             authorBio: "With over 18 years of global experience and +150 transformation projects delivered, Marcio Almeida is the authority behind this app's algorithm. Creator of the RICE© and Synapsys frameworks, he has developed more than 18,000 leaders worldwide.",
@@ -308,6 +334,9 @@ export const TRANSLATIONS = {
             avgAlignment: "Alinhamento médio em todas as unidades",
             average: "Média",
             newAnalysisBtn: "NOVA ANÁLISE",
+            strategicActionChecklist: "CHECKLIST DE AÇÃO ESTRATÉGICA",
+            shareVault: "Compartilhar Cofre do Portfólio",
+            downloadCsv: "Baixar CSV do Portfólio",
             scenarios: {
                 optimal: {
                     title: "SOBERANIA ESTRATÉGICA",
@@ -378,6 +407,29 @@ export const TRANSLATIONS = {
                     a: "Sim. O motor é alimentado por uma base de dados de mais de 150 casos reais de parcerias entre corporações e startups globais. Ele utiliza a metodologia proprietária de Marcio Almeida para ponderar atritos e prever probabilidades de sucesso. Como ferramenta preditiva, deve ser usada como guia estratégico, não como verdade absoluta."
                 }
             ],
+            marcioQuotes: {
+                critical: [
+                    "A governança não é um acessório; é o eixo sobre o qual a integridade da parceria se sustenta. Sem ela, o risco deixa de ser calculado e torna-se negligência.",
+                    "Em dezoito anos de consultoria global, aprendi que o desalinhamento tático em zonas críticas é o prelúdio silencioso da erosão de capital.",
+                    "Restaurar a ordem em um ecossistema em crise exige mais do que rapidez; exige o rigor de quem compreende a estrutura do problema.",
+                    "A soberania intelectual não permite amadorismo na gestão de atritos. O que ignoramos hoje, nos cobrará com juros amanhã.",
+                    "Não se constrói um legado sobre bases instáveis. Precisamos ancorar esta parceria em fundamentos de governança inegociáveis."
+                ],
+                manageable: [
+                    "A sinergia é latente, mas a eficácia reside na precisão cirúrgica da execução. O detalhe não é pequeno quando se busca a soberania.",
+                    "Onde há atrito, há oportunidade de refinamento. Ajustar o calibre agora é o que separa o projeto comum da entrega de alto impacto.",
+                    "A diferença entre uma parceria mediana e uma extraordinária é a governança que protege as margens de erro.",
+                    "Equilibrar vetores distintos exige uma visão de conjunto que só a experiência sistêmica proporciona. Vamos polir estas arestas.",
+                    "O progresso é visível, mas a proteção dos ativos intelectuais exige uma vigilância tática que ainda não atingimos."
+                ],
+                optimal: [
+                    "A soberania de mercado é o fruto de uma governança que antecipa o futuro protegendo os ativos do presente.",
+                    "Quando os vetores se alinham com esta precisão, o papel da liderança é institucionalizar a harmonia para que ela se torne perene.",
+                    "A sinergia plena é um ativo raro. Protegê-la com estruturas de governança robustas é o próximo passo para a escala global.",
+                    "Alcançar a zona ótima é um mérito; manter-se nela é uma disciplina intelectual e estratégica.",
+                    "O sucesso aqui não é sorte; é o reflexo de escolhas bem calibradas. Agora, vamos transformar essa força em hegemonia no mercado."
+                ]
+            },
             authorTitle: "ARQUITETADO POR",
             authorRole: "CIO & Fundador Ephata Solutions",
             authorBio: "Com mais de 18 anos de experiência global e +150 projetos de transformação entregues, Marcio Almeida é a autoridade por trás do algoritmo deste app. Criador dos frameworks RICE© e Synapsys, ele já desenvolveu mais de 18.000 líderes ao redor do mundo.",

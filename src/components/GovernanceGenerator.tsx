@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, CheckCircle, Download, Share2, Printer, Lock, MessageCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Download, Share2, Printer, Lock, MessageCircle, Sparkles, TrendingUp, Info } from 'lucide-react';
 
 
 interface GovernanceGeneratorProps {
@@ -18,7 +18,6 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const riskLevel = score > 80 ? 'OPTIMAL' : score > 50 ? 'MANAGEABLE' : 'CRITICAL';
-    const riskColor = score > 80 ? 'text-green-500' : score > 50 ? 'text-yellow-500' : 'text-red-500';
 
     const handlePrint = () => {
         window.print();
@@ -93,62 +92,81 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
     return (
         <div className="w-full max-w-5xl mx-auto pb-24">
             {/* Header Result */}
-            <div className="glass-panel p-6 md:p-8 rounded-2xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 border-t-4 border-t-white/10 print:border-none print:shadow-none">
-                <div className="flex-1 text-center md:text-left">
-                    <h2 className="text-body-highlight text-gray-400 mb-2">{labels.diagnosis.stepTitle}</h2>
-                    <div className="text-heading-hero text-white mb-2">
-                        {score}<span className="text-2xl md:text-3xl text-gray-600">/100</span>
-                    </div>
-                    <div className={`text-xl md:text-2xl tracking-widest font-bold ${riskColor}`}>
-                        {labels.diagnosis.levelLabel}: {translatedRiskLevel}
+            <div className="glass-panel p-8 rounded-3xl mb-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-white/5 bg-gradient-to-br from-emerald-500/5 to-transparent relative overflow-hidden group">
+                <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:bg-white/10 transition-colors" />
+
+                <div className="flex-1 text-center md:text-left relative z-10">
+                    <h2 className="text-[10px] font-black text-gray-500 tracking-[0.2em] uppercase mb-4">{labels.diagnosis.stepTitle}</h2>
+                    <div className="text-6xl md:text-7xl font-black text-white mb-4 tracking-tighter">
+                        {score}<span className="text-3xl md:text-4xl text-gray-700">/100</span>
                     </div>
                 </div>
 
-                <div className="flex gap-4 no-print">
-                    <button onClick={handleShare} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors tooltip" title={labels.diagnosis.share}>
-                        <Share2 className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                    </button>
-                    <button onClick={handlePrint} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.diagnosis.print}>
-                        <Printer className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                    </button>
-                    <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-full hover:bg-white/10 transition-colors" title={labels.diagnosis.exportCsv}>
-                        <Download className="w-5 h-5 md:w-6 md:h-6 text-white" />
-                    </button>
+                <div className="flex flex-col items-center md:items-end gap-6 relative z-10 w-full md:w-auto">
+                    <div className={`px-6 py-2 rounded-full border ${score > 80 ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400' : score > 50 ? 'border-amber-500/30 bg-amber-500/10 text-amber-400' : 'border-red-500/30 bg-red-500/10 text-red-500'} font-black text-xs tracking-widest uppercase`}>
+                        {labels.diagnosis.levelLabel}: {translatedRiskLevel}
+                    </div>
+                    <div className="flex gap-4 no-print">
+                        <button onClick={handleShare} className="p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all border border-white/5 hover:scale-110 active:scale-95 text-white" title={labels.diagnosis.share}>
+                            <Share2 className="w-5 h-5 md:w-6 md:h-6" />
+                        </button>
+                        <button onClick={handlePrint} className="p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all border border-white/5 hover:scale-110 active:scale-95 text-white" title={labels.diagnosis.print}>
+                            <Printer className="w-5 h-5 md:w-6 md:h-6" />
+                        </button>
+                        <button onClick={() => setShowEmailModal(true)} className="p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition-all border border-white/5 hover:scale-110 active:scale-95 text-white" title={labels.diagnosis.exportCsv}>
+                            <Download className="w-5 h-5 md:w-6 md:h-6" />
+                        </button>
+                        <button onClick={onRestart} className="px-6 py-4 bg-white text-black font-black rounded-2xl hover:scale-105 transition-all shadow-[0_15px_30px_rgba(255,255,255,0.1)] text-[10px] uppercase tracking-widest flex items-center gap-2">
+                            <Sparkles className="w-4 h-4" />
+                            {labels.diagnosis.restart}
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* Suggested Governance Clauses (The "Meat") */}
-            {/* Suggested Governance Clauses (The "Meat") */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {/* Suggested Governance Clauses */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
                 {analysis.filter((dim: any) => dim.status !== 'optimal').map((dim: any) => {
-                    // SMART DIAGNOSIS ENGINE logic
                     let recommendedService = null;
-
                     if (dim.id === 'ip') recommendedService = labels.diagnosis.services.gae;
                     else if (dim.id === 'risk') recommendedService = labels.diagnosis.services.asir;
                     else if (dim.id === 'speed') recommendedService = labels.diagnosis.services.saem;
                     else if (dim.id === 'cashflow') recommendedService = labels.diagnosis.services.etcd;
 
-                    // Determine label name from translation if possible, else fallback
                     const dimLabel = labels.calibration.dimensions[dim.id]?.label || dim.label;
+                    const isCritical = dim.delta > 4;
 
                     return (
-                        <div key={dim.id} className="glass-panel p-6 rounded-xl border border-red-500/20 relative overflow-hidden flex flex-col h-full">
-                            <div className="absolute top-0 right-0 p-2 opacity-10">
-                                <AlertTriangle className="w-24 h-24 text-red-500" />
+                        <div key={dim.id} className={`glass-panel p-8 rounded-3xl border ${isCritical ? 'border-red-500/20 bg-red-500/5' : 'border-amber-500/20 bg-amber-500/5'} relative overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500`}>
+                            <div className="absolute -top-4 -right-4 p-4 opacity-5">
+                                {isCritical ? <AlertTriangle className="w-24 h-24 text-red-500" /> : <Lock className="w-24 h-24 text-amber-500" />}
                             </div>
-                            <h4 className="text-red-400 font-bold mb-1 flex items-center gap-2 text-sm md:text-base tracking-wide uppercase">
-                                <Lock className="w-4 h-4" /> {labels.diagnosis.frictionDetected}: {dimLabel}
-                            </h4>
-                            <p className="text-gray-400 text-[10px] md:text-xs mb-4 uppercase tracking-[0.2em]">
-                                DIFF: {dim.delta} POINTS
+
+                            <div className="flex items-center gap-3 mb-6 relative z-10">
+                                <div className={`p-2 rounded-lg ${isCritical ? 'bg-red-500/10' : 'bg-amber-500/10'}`}>
+                                    {isCritical ? <AlertTriangle className="w-4 h-4 text-red-500" /> : <Lock className="w-4 h-4 text-amber-500" />}
+                                </div>
+                                <h4 className={`${isCritical ? 'text-red-400' : 'text-amber-400'} font-black text-xs tracking-[0.1em] uppercase`}>
+                                    {dimLabel}
+                                </h4>
+                            </div>
+
+                            <div className="text-3xl font-black text-white mb-1 tracking-tighter">
+                                {dim.delta} <span className="text-[10px] text-gray-600 font-bold uppercase tracking-widest">{labels.diagnosis.frictionDetected}</span>
+                            </div>
+
+                            <p className="text-[11px] text-gray-500 font-bold uppercase tracking-widest mb-8">
+                                STATUS: {isCritical ? 'CRITICAL' : 'MODERATE'}
                             </p>
 
                             {/* Service Card */}
-                            <div className="mt-auto bg-black/40 p-4 rounded-lg border-l-2 border-l-vault-corp group/svc hover:bg-black/60 transition-colors">
-                                <div className="text-[9px] text-vault-corp font-black mb-1 tracking-[0.2em] uppercase">{labels.diagnosis.servicesTitle}</div>
-                                <h5 className="text-white font-bold text-sm mb-1">{recommendedService?.title || "Consulting Session"}</h5>
-                                <p className="text-[11px] text-gray-500 leading-relaxed italic">
+                            <div className="mt-auto bg-black border border-white/5 p-5 rounded-2xl group/svc hover:border-emerald-500/30 transition-all shadow-2xl relative z-10">
+                                <div className="text-[8px] text-emerald-500 font-black mb-2 tracking-[0.2em] uppercase flex items-center gap-2">
+                                    <TrendingUp className="w-3 h-3" />
+                                    {labels.diagnosis.servicesTitle}
+                                </div>
+                                <h5 className="text-white font-black text-sm mb-2 uppercase tracking-tight leading-tight">{recommendedService?.title || "Consulting Session"}</h5>
+                                <p className="text-[10px] text-gray-500 leading-relaxed font-medium">
                                     {recommendedService?.desc || "Schedule a session to align these vectors."}
                                 </p>
                             </div>
@@ -156,48 +174,93 @@ const GovernanceGenerator: React.FC<GovernanceGeneratorProps> = ({ score, analys
                     );
                 })}
 
+                {/* Optimal Zones Redesigned */}
                 {analysis.filter((dim: any) => dim.status === 'optimal').length > 0 && (
-                    <div className="glass-panel p-6 rounded-xl border border-green-500/20 relative">
-                        <h4 className="text-green-400 font-bold mb-4 flex items-center gap-2 text-sm md:text-base tracking-wide">
-                            <CheckCircle className="w-4 h-4" /> {labels.diagnosis.optimalZone}
-                        </h4>
-                        <ul className="space-y-4">
+                    <div className="glass-panel p-8 rounded-3xl border border-emerald-500/20 bg-emerald-500/5 relative flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="p-2 bg-emerald-500/10 rounded-lg">
+                                <CheckCircle className="w-4 h-4 text-emerald-500" />
+                            </div>
+                            <h4 className="text-emerald-400 font-black text-xs tracking-[0.1em] uppercase">
+                                {labels.diagnosis.optimalZone}
+                            </h4>
+                        </div>
+                        <div className="space-y-4">
                             {analysis.filter((dim: any) => dim.status === 'optimal').map((dim: any) => {
                                 const dimLabel = labels.calibration.dimensions[dim.id]?.label || dim.label;
                                 return (
-                                    <li key={dim.id} className="text-gray-400 text-sm flex items-center gap-2">
-                                        <div className="w-2 h-2 bg-green-500 rounded-full" />
-                                        {dimLabel}
-                                    </li>
+                                    <div key={dim.id} className="flex items-center gap-3 group/opt">
+                                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full group-hover/opt:scale-150 transition-transform" />
+                                        <span className="text-xs text-gray-400 font-bold uppercase tracking-widest group-hover/opt:text-white transition-colors">
+                                            {dimLabel}
+                                        </span>
+                                    </div>
                                 );
                             })}
-                        </ul>
+                        </div>
+                        <div className="mt-8 pt-6 border-t border-emerald-500/10">
+                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest leading-relaxed">
+                                DIMENSIONS WITH FULL ALIGNMENT. NO MITIGATION REQUIRED.
+                            </p>
+                        </div>
                     </div>
                 )}
             </div>
 
-            {/* CTA Footer */}
-            <div className="text-center mt-12 mb-12 no-print space-y-6">
-                <div className="inline-block p-1 rounded-3xl bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-emerald-500/20 p-[1px]">
-                    <div className="bg-vault-bg rounded-3xl px-8 py-10 flex flex-col items-center border border-white/5">
-                        <p className="text-gray-400 font-medium mb-6 tracking-wide">{labels.diagnosis.expertTitle}</p>
-                        <a
-                            href={labels.knowledgeHub.whatsappUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-black rounded-full hover:scale-105 transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] group"
-                        >
-                            <MessageCircle className="w-5 h-5 text-emerald-600 group-hover:scale-110 transition-transform" />
-                            {labels.diagnosis.expertBtn.toUpperCase()}
-                        </a>
+            {/* CTA Footer with Randomized Marcio Quote */}
+            {(() => {
+                const scenarioKey = score > 80 ? 'optimal' : score > 50 ? 'manageable' : 'critical';
+                const quotes = labels.portfolio.marcioQuotes[scenarioKey];
+                const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+                return (
+                    <div className="mt-20 mb-20 space-y-12">
+                        {/* Randomized High-End Quote */}
+                        <div className="relative max-w-2xl mx-auto px-8 py-12 glass-panel rounded-[2rem] border border-white/5 bg-gradient-to-br from-white/5 to-transparent flex flex-col items-center text-center group no-print">
+                            <div className="absolute top-0 left-0 p-8 opacity-5">
+                                <Info className="w-32 h-32 text-white" />
+                            </div>
+                            <p className="text-lg md:text-xl font-medium text-white italic leading-relaxed mb-8 relative z-10 tracking-tight">
+                                "{randomQuote}"
+                            </p>
+
+                            <div className="flex flex-col items-center gap-2 relative z-10">
+                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500 to-cyan-500 flex items-center justify-center text-black font-black text-sm mb-2">MA</div>
+                                <div className="text-xs font-black text-white uppercase tracking-widest">{labels.portfolio.signature}</div>
+                                <div className="text-[10px] text-gray-500 font-black uppercase tracking-[0.3em]">{labels.knowledgeHub.authorRole}</div>
+                            </div>
+                        </div>
+
+                        {/* Consulting Box */}
+                        <div className="glass-panel p-10 rounded-[2.5rem] border border-emerald-500/20 bg-emerald-500/5 relative overflow-hidden group no-print max-w-3xl mx-auto">
+                            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-500/20 transition-colors" />
+                            <div className="relative z-10 text-center flex flex-col items-center">
+                                <div className="p-3 bg-emerald-500/10 rounded-2xl mb-6">
+                                    <MessageCircle className="w-8 h-8 text-emerald-500" />
+                                </div>
+                                <h4 className="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tighter">{labels.diagnosis.expertTitle}</h4>
+                                <p className="text-xs md:text-sm text-gray-500 font-bold uppercase tracking-[0.2em] mb-10 max-w-md">{labels.portfolio.consultingCTA}</p>
+                                <a
+                                    href={labels.knowledgeHub.whatsappUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-4 px-12 py-5 bg-emerald-500 text-black font-black rounded-2xl hover:scale-105 transition-all shadow-[0_20px_40px_rgba(16,185,129,0.3)] group text-sm uppercase tracking-widest"
+                                >
+                                    <MessageCircle className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                                    {labels.diagnosis.expertBtn.toUpperCase()}
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Disclaimer */}
+                        <div className="max-w-2xl mx-auto text-center px-8">
+                            <p className="text-[10px] text-gray-600 leading-snug italic font-medium opacity-60">
+                                {labels.portfolio.disclaimer}
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div className="mt-8">
-                    <button onClick={onRestart} className="text-gray-600 hover:text-white text-sm underline">
-                        {labels.diagnosis.restart}
-                    </button>
-                </div>
-            </div>
+                );
+            })()}
 
             {/* CSV/Email Modal */}
             {showEmailModal && (

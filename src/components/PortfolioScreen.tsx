@@ -43,17 +43,49 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
         : "0.0";
 
     const handleExportExecutive = () => {
-        window.print(); // Simple PDF trigger for now
+        window.print();
+    };
+
+    const handleShareVault = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: p.shareVault,
+                    text: `${p.avgScore}: ${avgScore}/100. ${p.avgAlignment}`,
+                    url: window.location.href,
+                });
+            } catch (err) {
+                console.error('Share failed', err);
+            }
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            alert(lang.diagnosis.shareSuccess);
+        }
+    };
+
+    const handleExportPortfolioCSV = () => {
+        const headers = "CorpName,StartupName,Score\n";
+        const rows = analyses.map(item => `${item.corpName},${item.startupName},${item.score}`).join("\n");
+        const csvContent = headers + rows;
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", `portfolio_report_${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     };
 
     return (
-        <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-8 duration-500 pb-20 no-print">
+        <div className="w-full max-w-6xl animate-in fade-in slide-in-from-bottom-8 duration-500 pb-20">
             <div className="flex items-center gap-4 mb-2">
                 <button onClick={onBack} className="p-2 hover:bg-white/10 rounded-full transition-colors text-white">
                     <ArrowLeft className="w-6 h-6" />
                 </button>
                 <h2 className="text-body-highlight text-emerald-400">{p.title}</h2>
-                <div className="ml-auto">
+                <div className="ml-auto no-print">
                     <button
                         onClick={onBack}
                         className="flex items-center gap-2 px-6 py-2.5 bg-white text-black font-black rounded-full hover:scale-105 transition-all shadow-[0_0_20px_rgba(255,255,255,0.2)] text-xs uppercase tracking-widest"
@@ -250,7 +282,7 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                     <div className="glass-panel p-8 rounded-3xl border border-white/10 bg-black/40">
                                         <h4 className="text-sm font-black text-white mb-6 tracking-widest uppercase flex items-center gap-3">
                                             <TrendingUp className="w-4 h-4 text-emerald-500" />
-                                            STRATEGIC_ACTION_CHECKLIST
+                                            {p.strategicActionChecklist}
                                         </h4>
                                         <div className="space-y-4">
                                             {scenario.checklist.map((item: string, idx: number) => (
@@ -287,11 +319,14 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                             {/* Portfolio Radar */}
                             <div className="glass-panel p-8 rounded-3xl border border-white/5 relative flex flex-col items-center">
                                 <div className="absolute top-6 left-8 text-[10px] font-black text-gray-600 tracking-[0.3em] uppercase">{p.avgProfile}</div>
-                                <div className="w-full h-[300px] mt-4">
+                                <div className="w-full h-[350px] mt-8">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <RadarChart cx="50%" cy="50%" outerRadius="80%" data={avgData}>
-                                            <PolarGrid stroke="#222" />
-                                            <PolarAngleAxis dataKey="subject" tick={{ fill: '#555', fontSize: 10, fontWeight: 'bold' }} />
+                                        <RadarChart cx="50%" cy="50%" outerRadius="65%" data={avgData}>
+                                            <PolarGrid stroke="#444" />
+                                            <PolarAngleAxis
+                                                dataKey="subject"
+                                                tick={{ fill: '#ddd', fontSize: 11, fontWeight: 'bold' }}
+                                            />
                                             <Radar
                                                 name={p.average}
                                                 dataKey="value"
@@ -299,7 +334,7 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                                 fill="#10b981"
                                                 fillOpacity={0.6}
                                             />
-                                            <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: '20px', fontSize: '10px', fontWeight: 'bold' }} />
+                                            <Legend verticalAlign="bottom" wrapperStyle={{ paddingTop: '20px', fontSize: '11px', fontWeight: 'bold' }} />
                                         </RadarChart>
                                     </ResponsiveContainer>
                                 </div>
@@ -350,12 +385,26 @@ const PortfolioScreen: React.FC<PortfolioScreenProps> = ({ analyses, lang, onVie
                                 <p className="text-sm text-gray-400 mb-8 max-w-xl leading-relaxed">
                                     {p.boardSummaryDesc}
                                 </p>
-                                <button
-                                    onClick={handleExportExecutive}
-                                    className="flex items-center gap-3 px-8 py-4 bg-amber-500 text-black font-black rounded-xl hover:scale-[1.02] transition-all shadow-xl shadow-amber-900/20 text-xs uppercase tracking-widest"
-                                >
-                                    <Download className="w-4 h-4" /> {p.boardExportBtn}
-                                </button>
+                                <div className="flex flex-wrap gap-4">
+                                    <button
+                                        onClick={handleExportExecutive}
+                                        className="flex items-center gap-3 px-8 py-4 bg-amber-500 text-black font-black rounded-xl hover:scale-[1.02] transition-all shadow-xl shadow-amber-900/20 text-xs uppercase tracking-widest"
+                                    >
+                                        <Printer className="w-4 h-4" /> {p.boardExportBtn}
+                                    </button>
+                                    <button
+                                        onClick={handleShareVault}
+                                        className="flex items-center gap-3 px-8 py-4 bg-white/5 text-white font-black rounded-xl hover:bg-white/10 transition-all text-xs uppercase tracking-widest border border-white/10"
+                                    >
+                                        <Share2 className="w-4 h-4" /> {p.shareVault}
+                                    </button>
+                                    <button
+                                        onClick={handleExportPortfolioCSV}
+                                        className="flex items-center gap-3 px-8 py-4 bg-white/5 text-white font-black rounded-xl hover:bg-white/10 transition-all text-xs uppercase tracking-widest border border-white/10"
+                                    >
+                                        <Download className="w-4 h-4" /> {p.downloadCsv}
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

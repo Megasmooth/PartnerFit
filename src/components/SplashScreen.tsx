@@ -32,10 +32,13 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱGEZE DE VE PE O OKO SO TO NO HO MO YO YO RO WO GO ZO DO BO PO VUTSU N';
         const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const nums = '0123456789';
-        const alphabet = katakana + latin + nums;
+        const greek = 'Εφφαθά';
+        const bible = 'Mark 7:34';
+        const brand = 'Ephata Solutions';
+        const alphabet = katakana + latin + nums + greek + bible + brand;
 
         const fontSize = 16;
         const columns = canvas.width / fontSize;
@@ -49,7 +52,17 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onFinish }) => {
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < rainDrops.length; i++) {
-                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                // Occasional Easter Egg injection
+                let text;
+                const rng = Math.random();
+                if (rng > 0.999) text = 'Ε';
+                else if (rng > 0.998) text = 'φ';
+                else if (rng > 0.997) text = 'α';
+                else if (rng > 0.996) text = 'θ';
+                else if (rng > 0.995) text = 'ά';
+                else if (rng > 0.994) text = '7:34';
+                else text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+
                 ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
 
                 if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
