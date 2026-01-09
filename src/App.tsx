@@ -118,8 +118,8 @@ function App() {
     return (
         <div className="min-h-screen flex flex-col items-center p-4 relative bg-vault-bg text-white">
             {/* Background Ambience */}
-            <div className="fixed inset-0 bg-vault-bg z-0" />
-            <div className="fixed top-0 left-0 w-full h-[500px] bg-gradient-to-b from-emerald-900/10 to-transparent pointer-events-none z-0" />
+            <div className="fixed inset-0 bg-vault-bg z-0 no-print" />
+            <div className="fixed top-0 left-0 w-full h-[500px] bg-gradient-to-b from-emerald-900/10 to-transparent pointer-events-none z-0 no-print" />
 
             {/* Navbar */}
             <nav className="relative z-50 w-full max-w-7xl flex justify-between items-center py-4 mb-4 border-b border-white/5 no-print">
